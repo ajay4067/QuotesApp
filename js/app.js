@@ -116,6 +116,14 @@ function isWeakPassword(password) {
         score++;
     return (score > 3) ? false : true;
 }
+function showHideGame($scope, showArray, hideArray) {
+    for (var n = 0; n < showArray.length; n++) {
+        $scope[showArray[n]] = true;
+    }
+    for (var n = 0; n < hideArray.length; n++) {
+        $scope[hideArray[n]] = false;
+    }
+}
 function resetObjectKeysToEmpty(obj) {
     _.each(_.keys(obj), function(key) {
         obj[key] = '';
@@ -127,6 +135,18 @@ function getStringData(obj) {
     _.each(_.keys(obj), function(key) {
         str = str + key + '=' + obj[key] + '&';
     });
-    console.log(str);
     return str;
 }
+// App messages
+var ACCOUNT_NOT_ACTIVE = 'The account is still not active, please check your email to activate.';
+var LOGIN_FAIL = 'Login Failed, please try again.';
+var RESET_EMAIL_SENT = 'The email is sent to the given email ID, provided it was found in our database.';
+var REGISTER_SUCCESS = 'Registered Successfully. Please check your email to activate the account.';
+var REGISTER_FAILURE = 'We are facing a technical issue in creating your account, please try again after some time.';
+var USER_ALREADY_VERIFIED = 'User is already verified please login.';
+var USER_VERIFIED = 'Verification complete please login.';
+var USER_VERIFICATION_ERR = 'There was an error in email verification.';
+var PASSWORD_RESET = 'Please enter your new password to reset.';
+var PASSWORD_RESET_USED = 'The reset link is either used or a new link has been requested.';
+var PASSWORD_CHANGED = 'The password has been changed please login with your new credentials.';
+var PASSWORD_CHANGE_FAIL = 'The password change link seems to have expired.';

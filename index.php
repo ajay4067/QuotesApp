@@ -21,7 +21,9 @@
                     window.location = pageUrl.substring(0, pageUrl.indexOf('?'));
                 } else if (queryParams[0] === 'activateUser') {
                     if (queryParams[1] === '200') {
-                        sessionStorage['activateUser'] = true;
+                        sessionStorage['activateUser'] = 200;
+                    } else if (queryParams[1] === '203') {
+                        sessionStorage['activateUser'] = 203;
                     } else {
                         sessionStorage['activateUser'] = false;
                     }
@@ -45,8 +47,7 @@
         </script>
         <link rel="stylesheet" href="css/style.css" />
         <link rel="stylesheet" href="lib/font-awesome/css/font-awesome.min.css" />
-        <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400,700' />
-        <!--<link href='http://fonts.googleapis.com/css?family=Tangerine:700' rel='stylesheet'>-->
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300|Roboto+Slab:100' rel='stylesheet'/>
         <script src="lib/angular/angular.min.js"></script>
         <script src="lib/angular/angular-animate.min.js"></script>
         <!-- <script src="lib/angular/ng-sanitize.js"></script> -->
@@ -56,35 +57,36 @@
     </head> 
     <body>
         <div ng-controller="NavController">
-            <header class="row" ng-controller="HeadController" ng-show="headerDisplay">
-                <h1>{{appTitle}}</h1>
-                <h3>{{appDescription}}</h3>
+            <header class="row">
+                <p class="titleBar large-12 columns">{{headerTitle}}<p>
+                <p ng-show="appMessageDisp" class="app-message  large-12 columns">{{titleBarMsg}}</p>
             </header>
-            <div class="row register-form" ng-controller="RegisterController" ng-show="registerDisplay">
+            <div class="row register-form" ng-controller="RegisterController" ng-show="registerDisp">
                 <div class="large-7 columns">
-                    <div class="bigQuote registerQuote">“There are only two ways to live your life. One is as though nothing is a miracle. The other is as though everything is a miracle.” 
+                    <div class="bigQuote registerQuote">There are only two ways to live your life. One is as though nothing is a miracle. The other is as though everything is a miracle.” 
                     </div>
                     <div class="quoteAuthorBigQuote">― Albert Einstein</div>
                 </div>
-                <div class="large-5 columns">
-                    <form name="registerForm" ng-submit="register(user)" novalidate>
+                <div class="large-5 columns reg-form-container">
+                    <p class="txt-reg">Register<p>
+                    <form ng-show="registerFormDisp" name="registerForm" ng-submit="register(user)" novalidate>
                         <div class="input-group">
-                            <input ng-class="{ 'invalid-input' : registerForm.name.$invalid && !registerForm.name.$pristine,
-                               'valid-input' : registerForm.name.$valid && registerForm.name.$dirty}"
+                            <input ng-class="{
+                                    'invalid-input' : registerForm.name.$invalid && !registerForm.name.$pristine,
+                                            'valid-input'
+                                    : registerForm.name.$valid && registerForm.name.$dirty}"
                                    type="text" placeholder="Name" ng-model="user.name" name="name"
                                    ng-minlength="4" ng-maxlength="20" required check-spl-chars/>
-                            <i class="check-complete fa fa-check-circle" ng-show="registerForm.name.$valid && registerForm.name.$dirty"></i>
-                            <i class="check-incomplete fa fa-times-circle" ng-show="registerForm.name.$invalid && !registerForm.name.$pristine"></i>
                             <p class="err-msg" ng-show="registerForm.name.$invalid && !registerForm.name.$pristine">
                                 Name should be atleast 4 character long and without special characters
                             </p>
                         </div>
                         <div class="input-group">
-                            <input ng-class="{ 'invalid-input' : registerForm.email.$invalid && !registerForm.email.$pristine && !emailIdUnique,
-                               'valid-input' : registerForm.email.$valid && registerForm.email.$dirty && emailIdUnique}"
+                            <input ng-class="{
+                                    'invalid-input' : registerForm.email.$invalid && !registerForm.email.$pristine && !emailIdUnique,
+                                            'valid-input'
+                                    : registerForm.email.$valid && registerForm.email.$dirty && emailIdUnique}"
                                    type="email" placeholder="Email Id" ng-model="user.emailId" name="email" required unique-email />
-                            <i class="check-complete fa fa-check-circle" ng-show="registerForm.email.$valid && registerForm.email.$dirty && emailIdUnique"></i>
-                            <i class="check-incomplete fa fa-times-circle" ng-show="registerForm.email.$invalid && !registerForm.email.$pristine && !emailIdUnique"></i>
                             <p class="err-msg" ng-show="registerForm.email.$invalid && !registerForm.email.$pristine">
                                 Invalid Email Id
                             </p>
@@ -96,11 +98,11 @@
                             </p>
                         </div>
                         <div class="input-group">
-                            <input ng-class="{ 'invalid-input' : registerForm.password.$invalid && !registerForm.password.$pristine,
-                               'valid-input' : registerForm.password.$valid && registerForm.password.$dirty}"
+                            <input ng-class="{
+                                    'invalid-input' : registerForm.password.$invalid && !registerForm.password.$pristine,
+                                            'valid-input'
+                                    : registerForm.password.$valid && registerForm.password.$dirty}"
                                    type="password" placeholder="Password"  ng-model="user.password" name="password" ng-minlength="6" ng-maxlength="12" required check-strong-pswd/>
-                            <i class="check-complete fa fa-check-circle" ng-show="registerForm.password.$valid && registerForm.password.$dirty"></i>
-                            <i class="check-incomplete fa fa-times-circle" ng-show="registerForm.password.$invalid && !registerForm.password.$pristine"></i>
                             <p class="err-msg" ng-show="registerForm.password.$error.strongPswd">Use strong password that contains at least 6 characters, a special character, a number and a capital letter</p>
                         </div>
                         <div id="captcha-container"></div>
@@ -109,43 +111,89 @@
                             Register
                         </button>                        
                     </form>
-                    <p ng-show="success_message">
-                        Registered Successfully. Please check your email to activate the account.
+                    <p ng-show="register_success" class="loginBtnRegForm">Login to the application, if email verification is complete.
                         <button class="stdBtn" ng-click="showLogin()">Login</button>
-                    </p>
-                    <p ng-show="failure_message">
-                        We are facing a technical issue in creating your account, please try again after some time.
                     </p>
                 </div>
             </div>
-            <div class="row login-control" ng-controller="LoginController" ng-show="loginDisplay">
-                <div class="row">
-                    <div class="large-12 columns">
-                        <p class="err-msg" ng-show="errorActivation">The account is still not activated, please check you email to activate.</p>
-                        <p class="err-msg" ng-show="errorLogin">Login Failed, please try again.</p>
-                    </div>
-                </div>
+            <div class="row login-control" ng-controller="LoginController" ng-show="loginDisp">
                 <div class="large-8 columns">
                     <div class="bigQuote">“There are only two ways to live your life. One is as though nothing is a miracle. The other is as though everything is a miracle.” 
                     </div>
                     <div class="quoteAuthorBigQuote">― Albert Einstein</div>
                 </div>
                 <div class="large-4 columns">
-                    <form autocomplete="off" class="login-form" name="loginForm" ng-submit="login(user)" novalidate>
-                        <input type="email" placeholder="Email Id" ng-model="user.emailId" name="email" required/>
+                    <form autocomplete="off" class="login-form" name="loginForm"
+                          ng-show="loginFormDisp" ng-submit="login(user)" novalidate>
+                        <input ng-class="{
+                                    'invalid-input' : loginForm.email.$invalid && !loginForm.email.$pristine,
+                                            'valid-input'
+                                    : loginForm.email.$valid && loginForm.email.$dirty}"
+                               type="email" placeholder="Email Id" ng-model="user.emailId" name="email" required/>
                         <p ng-show="loginForm.email.$invalid && !loginForm.email.$pristine">
                             Please Enter Valid email Id
                         </p>
-                        <input type="password" placeholder="Password"  ng-model="user.password" name="password" required/>
+                        <input ng-class="{
+                                    'invalid-input' : loginForm.password.$invalid && !loginForm.password.$pristine,
+                                            'valid-input'
+                                    : loginForm.password.$valid && loginForm.password.$dirty}"
+                               type="password" placeholder="Password"  ng-model="user.password" name="password" required/>
                         <p ng-show="loginForm.password.$invalid && !loginForm.password.$pristine">Password is required</p>
                         <button class="stdBtn" type="submit" ng-disabled="loginForm.$invalid">
                             Login
                         </button>
+                        <p class="signuplink"><span ng-click="showRegister()">
+                                New to Quotes Inspire? Sign Up Here!</span></p>
+                        <p class="forgotPswdLink"><span ng-click="showForgotPswd()">
+                                Forgot Password?</span></p>
                     </form>
-                    <p class="signuplink"><span ng-click="showRegister()">New to Quotes Inspire? Sign Up Here!</span></p>
+                    <form autocomplete="off" class="login-form" name="resetSendEmailForm"
+                          ng-show="resetSendEmailDisp" ng-submit="resetSendEmail(resetEmail)" novalidate>
+                        <input type="email" placeholder="Email Id" ng-model="resetEmail" name="resetEmail" required/>
+                        <p ng-show="resetSendEmailForm.email.$invalid && !resetSendEmailForm.email.$pristine">
+                            Please Enter Valid email Id
+                        </p>
+                        <button class="stdBtn" type="submit" ng-disabled="resetSendEmailForm.$invalid">
+                            Send Reset Link
+                        </button>
+                    </form>
                 </div>
             </div>
-            <div class="row" ng-controller="QuoteAppController" ng-show="quoteDisplay">
+            <div class="row reset-control" ng-controller="ResetController" ng-show="resetDisp">
+                <div class="large-8 columns">
+                    <div class="bigQuote">“There are only two ways to live your life. One is as though nothing is a miracle. The other is as though everything is a miracle.” 
+                    </div>
+                    <div class="quoteAuthorBigQuote">― Albert Einstein</div>
+                </div>
+                <div class="large-4 columns">
+                    <form autocomplete="off" class="login-form" name="resetForm"
+                          ng-submit="resetPswd(resetPswdObj)" novalidate>
+                        <p>{{resetPswdObj.email}}</p>
+                        <div class="input-group">
+                            <input ng-class="{
+                                    'invalid-input' : resetForm.password.$invalid && !resetForm.password.$pristine,
+                                            'valid-input'
+                                    : resetForm.password.$valid && resetForm.password.$dirty}"
+                                   type="password" placeholder="Password"  ng-model="resetPswdObj.newPassword" 
+                                   name="password" ng-minlength="6" ng-maxlength="12" required check-strong-pswd/>
+                            <p class="err-msg" ng-show="resetForm.password.$error.strongPswd">Use strong password that contains at least 6 characters, a special character, a number and a capital letter</p>
+                        </div>
+                        <div class="input-group">
+                            <input ng-class="{
+                                    'invalid-input' : resetPswdObj.newPassword != repeatPassword,
+                                            'valid-input'
+                                    : resetPswdObj.newPassword == repeatPassword}"
+                                   type="password" placeholder="Repeat Password" ng-disabled="resetForm.password.$invalid"
+                                   ng-model ="repeatPassword" name="repeatPassword"/>
+                            <p class="err-msg" ng-show="resetPswdObj.newPassword != repeatPassword && resetForm.repeatPassword.$dirty">Password do not match.</p>
+                        </div>
+                        <button class="stdBtn" type="submit" ng-disabled="resetForm.password.$pristine || resetForm.repeatPassword.$pristine || resetPswdObj.newPassword != repeatPassword">
+                            Reset Password
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div class="row" ng-controller="QuoteAppController" ng-show="quoteDisp">
                 <button ng-click="getWritersNCtgs()">
                     Fetch
                 </button>

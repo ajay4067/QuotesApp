@@ -17,9 +17,9 @@ myApp.factory('WebServiceHandler', function($q, $http) {
                 'X-Requested-With': 'XMLHttpRequest'
             }
         }).success(function(data, status, headers, config) {
-            deferred.resolve({'status': status, 'message': data});
+            deferred.resolve({'status': status, 'data': data});
         }).error(function(data, status, headers, config) {
-            deferred.reject({'status': status, 'message': data});
+            deferred.reject({'status': status, 'data': data});
         });
 
         return deferred.promise;
@@ -36,22 +36,26 @@ myApp.factory('WebServiceHandler', function($q, $http) {
                 'X-Requested-With': 'XMLHttpRequest'
             }
         }).success(function(data, status, headers, config) {
-            deferred.resolve({'status': status, 'message': data});
+            deferred.resolve({'status': status, 'data': data});
         }).error(function(data, status, headers, config) {
-            deferred.reject({'status': status, 'message': data});
+            deferred.reject({'status': status, 'data': data});
         });
         return deferred.promise;
     };
-    var checkUserAvailable = function(email) {
+    var sendResetLink = function(email) {
         var deferred = $q.defer();
-        $.ajax({
-            type: "GET",
-            url: SERVICE_ROOT + 'userAvailable/' + email
-        }).done(function(response) {
-            deferred.resolve(response);
-        }).fail(function(response) {
-            deferred.reject(response.responseJSON);
-        }).always(function() {
+        $http({
+            method: "GET",
+            url: SERVICE_ROOT + 'forgotPswd/' + email,
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Accept': '*/*',
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        }).success(function(data, status, headers, config) {
+            deferred.resolve({'status': status, 'data': data});
+        }).error(function(data, status, headers, config) {
+            deferred.reject({'status': status, 'data': data});
         });
         return deferred.promise;
     };
@@ -208,10 +212,30 @@ myApp.factory('WebServiceHandler', function($q, $http) {
         return deferred.promise;
     };
 
+    var resetPassword = function(resetPswdObj) {
+        var deferred = $q.defer();
+
+        $http({
+            method: "POST",
+            url: SERVICE_ROOT + 'forgotPswd',
+            data: getStringData(resetPswdObj),
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Accept': '*/*',
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        }).success(function(data, status, headers, config) {
+            deferred.resolve({'status': status, 'data': data});
+        }).error(function(data, status, headers, config) {
+            deferred.reject({'status': status, 'data': data});
+        });
+
+        return deferred.promise;
+    }
+
     return {
         register: registerUser,
         login: loginToServer,
-        userAvailable: checkUserAvailable,
         getWritersNCtgs: fetchWritersNCtgs,
         createWritersNCtgs: createWrtNCtg,
         deleteWritersNCtgs: removeWritersNCtgs,
@@ -220,6 +244,8 @@ myApp.factory('WebServiceHandler', function($q, $http) {
         createQuote: createNewQuote,
         updateQuote: updateTheQuote,
         deleteQuote: removeQuote,
-        getAllQuotesData: fetchAllQuotesData
+        getAllQuotesData: fetchAllQuotesData,
+        sendReset: sendResetLink,
+        resetPswd: resetPassword
     };
 });

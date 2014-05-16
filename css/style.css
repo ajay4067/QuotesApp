@@ -2575,14 +2575,12 @@ kbd {
 
 /* line 1, ../sass/_custom.scss */
 body {
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Open Sans Condensed', sans-serif;
   background: #323a45;
-  background: #fff;
   color: #FFF;
-  color: #323a45;
 }
 
-/* line 8, ../sass/_custom.scss */
+/* line 6, ../sass/_custom.scss */
 input {
   background-color: #fff !important;
   border: 1px solid rgba(0, 0, 0, 0.15);
@@ -2594,9 +2592,10 @@ input {
   padding: 0.65em 1em;
   transition: background-color 0.3s ease-out 0s, box-shadow 0.2s ease 0s, border-color 0.2s ease 0s;
   width: 100%;
+  font-weight: bold;
 }
 
-/* line 20, ../sass/_custom.scss */
+/* line 19, ../sass/_custom.scss */
 input:focus {
   border-bottom-left-radius: 0.3125em;
   border-color: rgba(0, 0, 0, 0.2);
@@ -2605,11 +2604,12 @@ input:focus {
   color: #454545;
 }
 
-/* line 27, ../sass/_custom.scss */
+/* line 26, ../sass/_custom.scss */
 .bigQuote {
-  font-family: 'Tangerine', cursive;
-  font-size: 72px;
+  font-family: 'Roboto Slab', serif;
+  font-size: 53px;
   padding: 20px;
+  font-weight: 300;
 }
 
 /* line 32, ../sass/_custom.scss */
@@ -2665,109 +2665,79 @@ form input {
 }
 
 /* line 70, ../sass/_custom.scss */
-.signuplink {
+.signuplink, .forgotPswdLink {
   text-align: center;
 }
 
 /* line 73, ../sass/_custom.scss */
-.login-control {
-  padding-top: 100px;
-}
-
-/* line 76, ../sass/_custom.scss */
 #captcha-container {
   text-align: center;
   margin: 10px 0;
 }
 
-/* line 80, ../sass/_custom.scss */
-.register-form {
-  padding-top: 80px;
-}
-
-/* line 83, ../sass/_custom.scss */
+/* line 77, ../sass/_custom.scss */
 .recaptchatable #recaptcha_response_field {
   border: 1px solid rgba(0, 0, 0, 0.15) !important;
   padding: 0.65em 1em !important;
 }
 
-/* line 87, ../sass/_custom.scss */
-.registerQuote {
-  color: #323a45;
-}
-
-/* line 90, ../sass/_custom.scss */
+/* line 83, ../sass/_custom.scss */
 #recaptcha_area {
   display: inline-block;
   overflow: auto;
 }
 
-/* line 94, ../sass/_custom.scss */
+/* line 87, ../sass/_custom.scss */
 .invalid-input {
-  background: #df8989 !important;
+  /*background: #df8989 !important;*/
   border: 1px solid #ca3838;
   color: #7b2121 !important;
   font-weight: bold;
 }
 
-/* line 100, ../sass/_custom.scss */
+/* line 93, ../sass/_custom.scss */
 .valid-input {
-  background: #91e26a !important;
+  /*background: #91e26a !important;*/
   border: 1px solid #58c026;
   color: #316b15 !important;
   font-weight: bold;
 }
 
-/* line 106, ../sass/_custom.scss */
+/* line 99, ../sass/_custom.scss */
 .err-msg {
   color: #df8989;
 }
 
-/* line 109, ../sass/_custom.scss */
+/* line 102, ../sass/_custom.scss */
 .success-msg {
   color: #91e26a;
 }
 
-/* line 112, ../sass/_custom.scss */
-.check-complete {
-  color: #316b15;
-  position: absolute;
-  right: 0.5em;
-  top: 1.4em;
-}
-
-/* line 118, ../sass/_custom.scss */
-.check-incomplete {
-  color: #7b2121;
-  position: absolute;
-  right: 0.5em;
-  top: 1.4em;
-}
-
-/* line 124, ../sass/_custom.scss */
+/* line 105, ../sass/_custom.scss */
 .input-group {
   position: relative;
 }
 
-/* line 127, ../sass/_custom.scss */
+/* line 108, ../sass/_custom.scss */
 p {
   padding: 0;
   margin: 0;
 }
 
-/* line 131, ../sass/_custom.scss */
+/* line 112, ../sass/_custom.scss */
 button[disabled], html input[disabled] {
   opacity: 0.6;
+  color: black;
 }
 
-/* line 134, ../sass/_custom.scss */
+/* line 116, ../sass/_custom.scss */
 button[disabled]:hover {
   border: 1px solid #58c026;
   background-image: linear-gradient(#91e26a, #56c620);
   box-shadow: inset 0 0 3px #e0f7d5;
 }
 
-/* line 139, ../sass/_custom.scss */
+/* line 121, ../sass/_custom.scss */
 span.ajax-load::before {
   background: url("../img/ajax-loader.gif");
   background-repeat: no-repeat;
@@ -2778,7 +2748,7 @@ span.ajax-load::before {
   margin: 10px 0;
 }
 
-/* line 148, ../sass/_custom.scss */
+/* line 130, ../sass/_custom.scss */
 div.ws-in-progress {
   position: absolute;
   top: 0;
@@ -2786,7 +2756,7 @@ div.ws-in-progress {
   opacity: 0.9;
 }
 
-/* line 154, ../sass/_custom.scss */
+/* line 136, ../sass/_custom.scss */
 span.ajax-load {
   position: absolute;
   text-align: center;
@@ -2796,26 +2766,92 @@ span.ajax-load {
   color: #fff;
 }
 
-/* line 163, ../sass/_custom.scss */
+/* line 145, ../sass/_custom.scss */
 .ng-hide-add,
 .ng-hide-remove {
   display: block !important;
 }
 
-/* line 168, ../sass/_custom.scss */
+/* line 150, ../sass/_custom.scss */
 .ng-hide-add.ng-hide-add-active,
 .ng-hide-remove.ng-hide-remove-active {
   -webkit-transition: all linear 0.5s;
   transition: all linear 0.5s;
 }
 
-/* line 172, ../sass/_custom.scss */
+/* line 154, ../sass/_custom.scss */
 .ng-hide {
   line-height: 0;
   opacity: 0;
 }
 
-/* line 176, ../sass/_custom.scss */
+/* line 158, ../sass/_custom.scss */
 .stdBtn:focus {
   border: 2px solid gray;
+}
+
+/* line 161, ../sass/_custom.scss */
+.titleBar {
+  text-align: center;
+  padding: 15px;
+  font-size: 3em;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* line 168, ../sass/_custom.scss */
+p.signuplink, p.forgotPswdLink {
+  padding: 5px 0;
+}
+/* line 170, ../sass/_custom.scss */
+p.signuplink:hover, p.forgotPswdLink:hover {
+  color: #000;
+}
+/* line 173, ../sass/_custom.scss */
+p.signuplink span, p.forgotPswdLink span {
+  cursor: pointer;
+  border-bottom: 1px solid;
+}
+
+/* line 178, ../sass/_custom.scss */
+p.app-message {
+  text-align: center;
+  padding: 10px;
+  border: 1px solid;
+  border-radius: 3px;
+  background: coral;
+  color: darkred;
+  font-weight: 600;
+}
+
+/* line 187, ../sass/_custom.scss */
+.loginBtnRegForm {
+  margin-top: 80px;
+  text-align: center;
+  color: #479f1d;
+  font-weight: 500;
+  font-size: 1.2em;
+}
+
+/* line 194, ../sass/_custom.scss */
+.reg-form-container {
+  margin-top: 20px;
+  background: #fff;
+  border-radius: 4px;
+  padding: 20px 20px 40px 20px;
+}
+
+/* line 200, ../sass/_custom.scss */
+.txt-reg {
+  text-align: center;
+  color: #323a45;
+  font-weight: 600;
+  letter-spacing: 1px;
+  font-size: 1.2em;
+  padding: 10px 0;
+}
+
+/* line 208, ../sass/_custom.scss */
+.quote-begin {
+  font-family: serif;
 }

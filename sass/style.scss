@@ -1,0 +1,20 @@
+// Foundation by ZURB
+// foundation.zurb.com
+// Licensed under MIT Open Source
+
+// Make sure the charset is set appropriately
+@charset "UTF-8";
+
+// Behold, here are all the Foundation components.
+@import
+  "normalize",
+  "foundation/settings",
+  "foundation/components/grid",
+  "foundation/components/block-grid",
+  "foundation/components/inline-lists",
+  "foundation/components/keystrokes";
+//custom imports
+@import
+  "custom";
+//bootstrap tables, responsive-images
+//gumby form-validation, tooltips, form alerts, buttons

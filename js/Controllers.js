@@ -1,58 +1,64 @@
-function NavController($scope) {
+myApp.controller('ParentController', function($scope) {
     $scope.appMessageDisp = true;
-//    keySet.resetKey = true;
-//    key = 'fdsfeefsfd***ajay4067@gmail.com';
     if (keySet.resetKey) {
         if (key) {
-            showHideGame($scope, ['resetDisp'], ['registerDisp', 'loginDisp', 'quoteDisp']);
+            showHideGame($scope, ['resetSendEmailDisp'], ['loginFormDisp']);
             $scope.appMessageDisp = true;
             $scope.$parent.titleBarMsg = PASSWORD_RESET;
             $scope.resetPswdObj = {'resetKey': key.split('***')[0], 'email': key.split('***')[1]};
         } else {
             $scope.appMessageDisp = true;
             $scope.$parent.titleBarMsg = PASSWORD_RESET_USED;
-            showHideGame($scope, ['loginDisp'], ['registerDisp', 'resetDisp', 'quoteDisp']);
+            showHideGame($scope, ['loginDisp'], []);
         }
 
     } else if (keySet.activateUser) {
         if (key === '200') {
-            showHideGame($scope, ['loginDisp'], ['registerDisp', 'quoteDisp', 'resetDisp']);
             $scope.appMessageDisp = true;
             $scope.$parent.titleBarMsg = USER_VERIFIED;
         } else if (key === '203') {
-            showHideGame($scope, ['loginDisp'], ['registerDisp', 'quoteDisp', 'resetDisp']);
             $scope.appMessageDisp = true;
             $scope.$parent.titleBarMsg = USER_ALREADY_VERIFIED;
         } else {
-            showHideGame($scope, ['loginDisp'], ['registerDisp', 'quoteDisp', 'resetDisp']);
             $scope.appMessageDisp = true;
             $scope.$parent.titleBarMsg = USER_VERIFICATION_ERR;
         }
     } else {
         $scope.appMessageDisp = false;
-        showHideGame($scope, ['loginDisp'], ['appMessageDisp', 'registerDisp', 'quoteDisp', 'resetDisp']);
     }
     $scope.headerTitle = "Inspirational Quotes";
-    $scope.showRegister = function() {
-        showHideGame($scope, ['registerDisp'], ['appMessageDisp', 'loginDisp', 'quoteDisp', 'resetDisp']);
-        angular.element(document.body).css({'background': '#323a45', 'color': '#fff'});
-    };
-    $scope.showLogin = function() {
-        showHideGame($scope, ['loginDisp'], ['appMessageDisp', 'registerDisp', 'quoteDisp', 'resetDisp']);
-        angular.element(document.body).css({'background': '#323a45', 'color': '#fff'});
-    };
-}
+});
 
-function RegisterController($scope, WebServiceHandler) {
+myApp.controller('RegisterController', function($scope, WebServiceHandler) {
+    $scope.appMessageDisp = false;
+    $scope.singleQuote = '“There are only two ways to live your life. One is as though nothing is a miracle. The other is as though everything is a miracle.”';
+    $scope.singleQuoteAuthor = '― Albert Einstein';
+    $scope.register_validation_name = REGISTER_VALIDATION_NAME;
+    $scope.register_validation_email = REGISTER_VALIDATION_EMAIL;
+    $scope.register_validation_password = REGISTER_VALIDATION_PASSWORD;
+    $scope.register_validation_captcha = REGISTER_VALIDATION_CAPTCHA;
+    $scope.register_login = REGISTER_LOGIN;
     $scope.register_success = false;
-    $scope.registerFormDisp = true;
     $scope.emailIdUnique = false;
+    $scope.registerFormDisp = true;
     $scope.emailIdStatusReceived = '';
 
-    Recaptcha.create("6LcyZfMSAAAAAHxXTKjVqC2G6qike2rUDjQhj5rC", "captcha-container", {
-        theme: "white",
-        callback: Recaptcha.focus_response_field
-    });
+    if (typeof Recaptcha === 'undefined') {
+        var captcha_script = document.createElement('script');
+        captcha_script.setAttribute('src', 'http://www.google.com/recaptcha/api/js/recaptcha_ajax.js');
+        document.head.appendChild(captcha_script);
+        captcha_script.onload = function() {
+            Recaptcha.create("6LcyZfMSAAAAAHxXTKjVqC2G6qike2rUDjQhj5rC", "captcha-container", {
+                theme: "white",
+                callback: Recaptcha.focus_response_field
+            });
+        };
+    } else {
+        Recaptcha.create("6LcyZfMSAAAAAHxXTKjVqC2G6qike2rUDjQhj5rC", "captcha-container", {
+            theme: "white",
+            callback: Recaptcha.focus_response_field
+        });
+    }
 
     $scope.register = function(user) {
         showLoading();
@@ -64,15 +70,14 @@ function RegisterController($scope, WebServiceHandler) {
             'recaptcha_response_field': Recaptcha.get_response()
         }).then(function(response) {
             if (response.status === 201) {
-                $scope.$parent.appMessageDisp = true;
-                $scope.$parent.titleBarMsg = REGISTER_SUCCESS;
+                $scope.appMessageDisp = true;
+                $scope.appMessage = REGISTER_SUCCESS;
                 $scope.captchaError = false;
                 $scope.registerFormDisp = false;
                 $scope.register_success = true;
             } else {
-                $scope.$parent.appMessageDisp = true;
-                $scope.$parent.titleBarMsg = REGISTER_FAILURE;
-                $scope.success_message = false;
+                $scope.appMessageDisp = true;
+                $scope.appMessage = REGISTER_FAILURE;
                 $scope.captchaError = false;
                 $scope.registerFormDisp = false;
                 $scope.register_success = true;
@@ -82,26 +87,25 @@ function RegisterController($scope, WebServiceHandler) {
             if (failureReason.status === 400 && (failureReason.data.message === 'captcha is not valid' || failureReason.data.message === 'Required field(s) recaptcha_response_field is missing or empty')) {
                 Recaptcha.reload();
                 $scope.captchaError = true;
-                $scope.failure_message = false;
-                $scope.success_message = false;
             } else {
                 $scope.$parent.appMessageDisp = true;
                 $scope.$parent.titleBarMsg = REGISTER_FAILURE;
-                $scope.success_message = false;
                 $scope.captchaError = false;
-                $scope.registerFormDisp = false;
-                $scope.register_success = true;
+                $scope.registerFormDisp = true;
+                $scope.loginForm.$setPristine(true);
+                $scope.user = resetObjectKeysToEmpty(user);
             }
             hideLoading();
         });
     };
-}
+});
 
-function LoginController($scope, WebServiceHandler, $http) {
-    $scope.errorLogin = false;
-    $scope.errorActivation = false;
+myApp.controller('LoginController', function($scope, WebServiceHandler, $http) {
     $scope.loginFormDisp = true;
     $scope.resetSendEmailDisp = false;
+    $scope.headerTitle = "Inspirational Quotes";
+    $scope.singleQuote = '“There are only two ways to live your life. One is as though nothing is a miracle. The other is as though everything is a miracle.”';
+    $scope.singleQuoteAuthor = '― Albert Einstein';
     $scope.login = function(user) {
         appMessageDisp = false;
         showLoading();
@@ -111,21 +115,17 @@ function LoginController($scope, WebServiceHandler, $http) {
         }).then(function(response) {
             if (response.status === 200) {
                 $http.defaults.headers.common['Authorization'] = response.data.api_key;
-                $scope.$parent.loginDisp = false;
-                $scope.$parent.appMessageDisp = false;
-                $scope.quoteDisp = true;
-                $scope.loginForm.$setPristine(true);
-                $scope.user = resetObjectKeysToEmpty(user);
+                //present Logged in page
             } else if (response.status === 202) {
-                $scope.$parent.titleBarMsg = ACCOUNT_NOT_ACTIVE;
-                $scope.$parent.appMessageDisp = true;
+                $scope.appMessage = ACCOUNT_NOT_ACTIVE;
+                $scope.appMessageDisp = true;
                 $scope.loginForm.$setPristine(true);
                 $scope.user = resetObjectKeysToEmpty(user);
             }
             hideLoading();
-        }, function(data) {
-            $scope.$parent.titleBarMsg = LOGIN_FAIL;
-            $scope.$parent.appMessageDisp = true;
+        }, function() {
+            $scope.appMessage = LOGIN_FAIL;
+            $scope.appMessageDisp = true;
             $scope.loginForm.$setPristine(true);
             $scope.user = resetObjectKeysToEmpty(user);
             hideLoading();
@@ -140,16 +140,16 @@ function LoginController($scope, WebServiceHandler, $http) {
         $scope.$parent.appMessageDisp = false;
         showLoading();
         WebServiceHandler.sendReset(email).then(function() {
-            $scope.$parent.appMessageDisp = true;
-            $scope.$parent.titleBarMsg = RESET_EMAIL_SENT;
+            $scope.appMessageDisp = true;
+            $scope.appMessage = RESET_EMAIL_SENT;
             $scope.loginFormDisp = true;
             $scope.resetSendEmailDisp = false;
             $scope.resetSendEmailForm.$setPristine(true);
             $scope.resetEmail = '';
             hideLoading();
         }, function() {
-            $scope.$parent.appMessageDisp = true;
-            $scope.$parent.titleBarMsg = RESET_EMAIL_SENT;
+            $scope.appMessageDisp = true;
+            $scope.appMessage = RESET_EMAIL_SENT;
             $scope.loginFormDisp = true;
             $scope.resetSendEmailDisp = false;
             $scope.resetSendEmailForm.$setPristine(true);
@@ -157,8 +157,15 @@ function LoginController($scope, WebServiceHandler, $http) {
             hideLoading();
         });
     };
-}
-function ResetController($scope, WebServiceHandler) {
+
+    $scope.showRegisterTemplate = function() {
+        var captcha_script = document.createElement('script');
+        captcha_script.setAttribute('src', 'http://www.google.com/recaptcha/api/js/recaptcha_ajax.js');
+        document.head.appendChild(captcha_script);
+        window.location.hash = '#register';
+    };
+});
+myApp.controller('ResetController', function($scope, WebServiceHandler) {
     $scope.resetPswd = function(resetPswdObj) {
         showLoading();
         var pswd = resetPswdObj.newPassword;
@@ -175,8 +182,8 @@ function ResetController($scope, WebServiceHandler) {
             hideLoading();
         });
     };
-}
-function QuoteAppController($scope, WebServiceHandler, Data) {
+});
+myApp.controller('QuoteAppController', function($scope, WebServiceHandler, Data) {
     $scope.getWritersNCtgs = function() {
         WebServiceHandler.getWritersNCtgs(Data.api_key).then(function(response) {
             $scope.quoteData = response;
@@ -278,4 +285,4 @@ function QuoteAppController($scope, WebServiceHandler, Data) {
         });
     };
 
-}
+});

@@ -1,5 +1,4 @@
 body{
-    font-family: 'Open Sans Condensed', sans-serif;
     background: #323a45;
     color : #FFF;
 }
@@ -185,7 +184,7 @@ p.app-message {
     font-weight: 600;
 }
 .loginBtnRegForm {
-    margin-top: 80px;
+    margin-top: 28px;
     text-align: center;
     color: #479f1d;
     font-weight: 500;
@@ -206,3 +205,37 @@ p.app-message {
     padding : 10px 0;
 }
 .quote-begin{font-family: serif;}
+.load-view.ng-enter {
+    -webkit-animation: fadeInDown 1s;
+    -moz-animation: fadeInDown 1s;
+    -ms-animation: fadeInDown 1s;
+    animation: fadeInDown 1s;
+}
+.err-msg.ng-hide-remove{
+    -webkit-animation: slideInRight 1s;
+    -moz-animation: slideInRight 1s;
+    -ms-animation: slideInRight 1s;
+    animation: slideInRight 1s;
+}
+.err-msg.ng-hide-add{
+    -webkit-animation: disapear 1s;
+    -webkit-animation-fill-mode: forwards; 
+    animation: disapear 1s;
+    animation-fill-mode: forwards;
+}
+.app-message.ng-hide-remove{
+    -webkit-animation: flipInX 1s;
+    -moz-animation: flipInX 1s;
+    -ms-animation: flipInX 1s;
+    animation: flipInX 1s;
+}
+@-webkit-keyframes disapear{
+    50% {
+        -webkit-transform: translateX(-5%);
+        transform: translateX(-5%);
+    }
+    100% {
+        -webkit-transform: translateX(200%);
+        transform: translateX(200%); 
+    }    
+}

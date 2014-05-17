@@ -1,7 +1,16 @@
-var APP_ROOT = 'http://localhost/QuotesApp/';
-var SERVICE_ROOT = 'http://jaagar.org/QuotesAppService/v1/';
-var SERVICE_ROOT = 'http://localhost/QuotesAppService/v1/';
-var myApp = angular.module('myApp', ['ngAnimate']);
+var myApp = angular.module('myApp', ['ngRoute', 'ngAnimate']);
+// configure our routes
+myApp.config(function($routeProvider) {
+    $routeProvider
+            .when('/', {
+                templateUrl: 'login.php',
+                controller: 'LoginController'
+            })
+            .when('/register', {
+                templateUrl: 'register.php',
+                controller: 'RegisterController'
+            });
+});
 myApp.directive('checkSplChars', function() {
     return {
         require: 'ngModel',
@@ -35,7 +44,7 @@ myApp.directive('uniqueEmail', function($http) {
                     return;
                 }
                 $http({
-                    type: "method",
+                    method: "GET",
                     url: SERVICE_ROOT + 'userAvailable/' + element.val(),
                     crossDomain: true
                 }).success(function(data, status, headers, config) {
@@ -137,16 +146,3 @@ function getStringData(obj) {
     });
     return str;
 }
-// App messages
-var ACCOUNT_NOT_ACTIVE = 'The account is still not active, please check your email to activate.';
-var LOGIN_FAIL = 'Login Failed, please try again.';
-var RESET_EMAIL_SENT = 'The email is sent to the given email ID, provided it was found in our database.';
-var REGISTER_SUCCESS = 'Registered Successfully. Please check your email to activate the account.';
-var REGISTER_FAILURE = 'We are facing a technical issue in creating your account, please try again after some time.';
-var USER_ALREADY_VERIFIED = 'User is already verified please login.';
-var USER_VERIFIED = 'Verification complete please login.';
-var USER_VERIFICATION_ERR = 'There was an error in email verification.';
-var PASSWORD_RESET = 'Please enter your new password to reset.';
-var PASSWORD_RESET_USED = 'The reset link is either used or a new link has been requested.';
-var PASSWORD_CHANGED = 'The password has been changed please login with your new credentials.';
-var PASSWORD_CHANGE_FAIL = 'The password change link seems to have expired.';

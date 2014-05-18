@@ -2539,17 +2539,17 @@ select {
 }
 /* line 1, ../sass/_custom.scss */
 body {
-  background: #323a45;
+  font-family: 'Open Sans Condensed', sans-serif;
+  background: #00c18b;
   color: #FFF;
 }
 
-/* line 5, ../sass/_custom.scss */
+/* line 6, ../sass/_custom.scss */
 input {
   background-color: #fff !important;
   border: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 0.3125em;
   color: rgba(0, 0, 0, 0.7);
-  font-size: 1em;
   margin: 0;
   outline: 0 none;
   padding: 0.65em 1em;
@@ -2573,33 +2573,36 @@ input:focus {
   font-size: 53px;
   padding: 20px;
   font-weight: 300;
+  color: rgba(0, 0, 0, 0.8);
+  text-shadow: 2px 8px 6px rgba(0, 0, 0, 0.2), 0px -5px 35px rgba(255, 255, 255, 0.3);
+  margin-top: 20px;
 }
 
-/* line 31, ../sass/_custom.scss */
+/* line 35, ../sass/_custom.scss */
 div.quoteAuthorBigQuote {
   text-align: right;
   font-size: 32px;
 }
 
-/* line 35, ../sass/_custom.scss */
+/* line 39, ../sass/_custom.scss */
 .login-form {
   margin-top: 80px;
 }
 
-/* line 38, ../sass/_custom.scss */
+/* line 42, ../sass/_custom.scss */
 input:-webkit-autofill {
   -webkit-box-shadow: 0 0 0 50px white inset;
   /* Change the color to your own background color */
   /*-webkit-text-fill-color: #333;*/
 }
 
-/* line 43, ../sass/_custom.scss */
+/* line 47, ../sass/_custom.scss */
 input:-webkit-autofill:focus {
   -webkit-box-shadow: 0 0 0 50px white inset;
   /*-webkit-text-fill-color: #333;*/
 }
 
-/* line 47, ../sass/_custom.scss */
+/* line 51, ../sass/_custom.scss */
 .stdBtn {
   width: 100%;
   border: 1px solid #58c026;
@@ -2615,92 +2618,103 @@ input:-webkit-autofill:focus {
   font-weight: bold;
 }
 
-/* line 61, ../sass/_custom.scss */
+/* line 65, ../sass/_custom.scss */
 .stdBtn:hover {
   background-image: linear-gradient(#96e570, #64df29);
   box-shadow: inset 0 0 3px #e5f9db;
   border: 1px solid #479f1d;
+  color: #fff;
 }
 
-/* line 66, ../sass/_custom.scss */
+/* line 71, ../sass/_custom.scss */
 form input {
   margin: 10px 0;
 }
 
-/* line 69, ../sass/_custom.scss */
+/* line 74, ../sass/_custom.scss */
 .signuplink, .forgotPswdLink {
   text-align: center;
 }
 
-/* line 72, ../sass/_custom.scss */
+/* line 78, ../sass/_custom.scss */
+.signuplink a {
+  color: #fff;
+}
+
+/* line 81, ../sass/_custom.scss */
+.signuplink a:hover {
+  cursor: pointer;
+  color: #000;
+}
+
+/* line 85, ../sass/_custom.scss */
 #captcha-container {
   text-align: center;
   margin: 10px 0;
 }
 
-/* line 76, ../sass/_custom.scss */
+/* line 89, ../sass/_custom.scss */
 .recaptchatable #recaptcha_response_field {
   border: 1px solid rgba(0, 0, 0, 0.15) !important;
   padding: 0.65em 1em !important;
 }
 
-/* line 82, ../sass/_custom.scss */
+/* line 95, ../sass/_custom.scss */
 #recaptcha_area {
   display: inline-block;
   overflow: auto;
 }
 
-/* line 86, ../sass/_custom.scss */
+/* line 99, ../sass/_custom.scss */
 .invalid-input {
-  /*background: #df8989 !important;*/
-  border: 1px solid #ca3838;
-  color: #7b2121 !important;
+  border: 1px solid #8E001C;
+  color: #8E001C !important;
   font-weight: bold;
 }
 
-/* line 92, ../sass/_custom.scss */
+/* line 104, ../sass/_custom.scss */
 .valid-input {
-  /*background: #91e26a !important;*/
-  border: 1px solid #58c026;
-  color: #316b15 !important;
+  border: 1px solid #45BF55;
+  color: #45BF55 !important;
   font-weight: bold;
 }
 
-/* line 98, ../sass/_custom.scss */
+/* line 109, ../sass/_custom.scss */
 .err-msg {
-  color: #df8989;
+  color: #8E001C;
+  font-weight: 600;
 }
 
-/* line 101, ../sass/_custom.scss */
+/* line 113, ../sass/_custom.scss */
 .success-msg {
   color: #91e26a;
 }
 
-/* line 104, ../sass/_custom.scss */
+/* line 116, ../sass/_custom.scss */
 .input-group {
   position: relative;
 }
 
-/* line 107, ../sass/_custom.scss */
+/* line 119, ../sass/_custom.scss */
 p {
   padding: 0;
   margin: 0;
 }
 
-/* line 111, ../sass/_custom.scss */
+/* line 123, ../sass/_custom.scss */
 button[disabled], html input[disabled] {
   opacity: 0.6;
   color: black;
 }
 
-/* line 115, ../sass/_custom.scss */
+/* line 127, ../sass/_custom.scss */
 button[disabled]:hover {
   border: 1px solid #58c026;
   background-image: linear-gradient(#91e26a, #56c620);
   box-shadow: inset 0 0 3px #e0f7d5;
 }
 
-/* line 120, ../sass/_custom.scss */
+/* line 132, ../sass/_custom.scss */
 span.ajax-load::before {
   background: url("../img/ajax-loader.gif");
   background-repeat: no-repeat;
@@ -2711,7 +2725,7 @@ span.ajax-load::before {
   margin: 10px 0;
 }
 
-/* line 129, ../sass/_custom.scss */
+/* line 141, ../sass/_custom.scss */
 div.ws-in-progress {
   position: absolute;
   top: 0;
@@ -2719,7 +2733,7 @@ div.ws-in-progress {
   opacity: 0.9;
 }
 
-/* line 135, ../sass/_custom.scss */
+/* line 147, ../sass/_custom.scss */
 span.ajax-load {
   position: absolute;
   text-align: center;
@@ -2729,55 +2743,56 @@ span.ajax-load {
   color: #fff;
 }
 
-/* line 144, ../sass/_custom.scss */
+/* line 156, ../sass/_custom.scss */
 .ng-hide-add,
 .ng-hide-remove {
   display: block !important;
 }
 
-/* line 149, ../sass/_custom.scss */
+/* line 161, ../sass/_custom.scss */
 .ng-hide-add.ng-hide-add-active,
 .ng-hide-remove.ng-hide-remove-active {
   -webkit-transition: all linear 0.5s;
   transition: all linear 0.5s;
 }
 
-/* line 153, ../sass/_custom.scss */
+/* line 165, ../sass/_custom.scss */
 .ng-hide {
   line-height: 0;
   opacity: 0;
 }
 
-/* line 157, ../sass/_custom.scss */
+/* line 169, ../sass/_custom.scss */
 .stdBtn:focus {
-  border: 2px solid gray;
+  text-shadow: 2px 0 4px #000;
 }
 
-/* line 160, ../sass/_custom.scss */
+/* line 172, ../sass/_custom.scss */
 .titleBar {
   text-align: center;
   padding: 15px;
   font-size: 3em;
   font-weight: 600;
   text-transform: uppercase;
+  text-shadow: 3px 1px 0px rgba(0, 0, 0, 0.4);
 }
 
-/* line 167, ../sass/_custom.scss */
+/* line 180, ../sass/_custom.scss */
 p.signuplink, p.forgotPswdLink {
   padding: 5px 0;
 }
-/* line 169, ../sass/_custom.scss */
+/* line 182, ../sass/_custom.scss */
 p.signuplink:hover, p.forgotPswdLink:hover {
   color: #000;
 }
-/* line 172, ../sass/_custom.scss */
+/* line 185, ../sass/_custom.scss */
 p.signuplink span, p.forgotPswdLink span {
   cursor: pointer;
   border-bottom: 1px solid;
 }
 
-/* line 177, ../sass/_custom.scss */
-p.app-message {
+/* line 190, ../sass/_custom.scss */
+p.app-message-error {
   text-align: center;
   padding: 10px;
   border: 1px solid;
@@ -2787,16 +2802,28 @@ p.app-message {
   font-weight: 600;
 }
 
-/* line 186, ../sass/_custom.scss */
+/* line 199, ../sass/_custom.scss */
+p.app-message-success {
+  text-align: center;
+  padding: 10px;
+  border: 1px solid;
+  border-radius: 3px;
+  background: #58c026;
+  color: #316b15;
+  font-weight: 600;
+}
+
+/* line 208, ../sass/_custom.scss */
 .loginBtnRegForm {
   margin-top: 28px;
   text-align: center;
   color: #479f1d;
   font-weight: 500;
   font-size: 1.2em;
+  color: #316b15;
 }
 
-/* line 193, ../sass/_custom.scss */
+/* line 216, ../sass/_custom.scss */
 .reg-form-container {
   margin-top: 20px;
   background: #fff;
@@ -2804,7 +2831,7 @@ p.app-message {
   padding: 20px 20px 40px 20px;
 }
 
-/* line 199, ../sass/_custom.scss */
+/* line 222, ../sass/_custom.scss */
 .txt-reg {
   text-align: center;
   color: #323a45;
@@ -2814,12 +2841,12 @@ p.app-message {
   padding: 10px 0;
 }
 
-/* line 207, ../sass/_custom.scss */
+/* line 230, ../sass/_custom.scss */
 .quote-begin {
   font-family: serif;
 }
 
-/* line 208, ../sass/_custom.scss */
+/* line 231, ../sass/_custom.scss */
 .load-view.ng-enter {
   -webkit-animation: fadeInDown 1s;
   -moz-animation: fadeInDown 1s;
@@ -2827,7 +2854,7 @@ p.app-message {
   animation: fadeInDown 1s;
 }
 
-/* line 214, ../sass/_custom.scss */
+/* line 237, ../sass/_custom.scss */
 .err-msg.ng-hide-remove {
   -webkit-animation: slideInRight 1s;
   -moz-animation: slideInRight 1s;
@@ -2835,7 +2862,7 @@ p.app-message {
   animation: slideInRight 1s;
 }
 
-/* line 220, ../sass/_custom.scss */
+/* line 243, ../sass/_custom.scss */
 .err-msg.ng-hide-add {
   -webkit-animation: disapear 1s;
   -webkit-animation-fill-mode: forwards;
@@ -2843,7 +2870,7 @@ p.app-message {
   animation-fill-mode: forwards;
 }
 
-/* line 226, ../sass/_custom.scss */
+/* line 249, ../sass/_custom.scss */
 .app-message.ng-hide-remove {
   -webkit-animation: flipInX 1s;
   -moz-animation: flipInX 1s;
@@ -2852,15 +2879,58 @@ p.app-message {
 }
 
 @-webkit-keyframes disapear {
-  /* line 233, ../sass/_custom.scss */
+  /* line 256, ../sass/_custom.scss */
   50% {
     -webkit-transform: translateX(-5%);
     transform: translateX(-5%);
   }
 
-  /* line 237, ../sass/_custom.scss */
+  /* line 260, ../sass/_custom.scss */
   100% {
     -webkit-transform: translateX(200%);
     transform: translateX(200%);
   }
+}
+
+/* line 265, ../sass/_custom.scss */
+.loginBtnRegForm a {
+  display: block;
+  width: 80%;
+  text-align: center;
+  margin: 0 auto;
+  margin-top: 22px;
+  text-decoration: none;
+  color: #fff;
+}
+
+/* line 274, ../sass/_custom.scss */
+.header {
+  padding: 0;
+}
+
+/* line 277, ../sass/_custom.scss */
+span.linkResend:hover {
+  color: black;
+}
+
+/* line 280, ../sass/_custom.scss */
+span.linkResend {
+  cursor: pointer;
+  color: green;
+  font-weight: 600;
+}
+
+/* line 285, ../sass/_custom.scss */
+p.resend-verify-invite {
+  padding: 10px;
+  text-align: center;
+  font-size: 1.2em;
+}
+
+/* line 290, ../sass/_custom.scss */
+.reset-email {
+  padding: 0 0 5px;
+  font-size: 1.2em;
+  color: black;
+  font-weight: 600;
 }

@@ -3,12 +3,20 @@ var myApp = angular.module('myApp', ['ngRoute', 'ngAnimate']);
 myApp.config(function($routeProvider) {
     $routeProvider
             .when('/', {
-                templateUrl: 'login.php',
+                templateUrl: 'templates/login.php',
                 controller: 'LoginController'
             })
             .when('/register', {
-                templateUrl: 'register.php',
+                templateUrl: 'templates/register.php',
                 controller: 'RegisterController'
+            })
+            .when('/redirect', {
+                templateUrl: 'templates/redirect.php',
+                controller: 'ResetController'
+            })
+            .when('/category', {
+                templateUrl: 'templates/category.php',
+                controller: 'CategoryController'
             });
 });
 myApp.directive('checkSplChars', function() {
@@ -82,7 +90,13 @@ myApp.directive('checkStrongPswd', function() {
     };
 });
 
-function showLoading() {
+function showLoading($scope, showArray, hideArray) {
+    for (var n = 0; n < showArray.length; n++) {
+        $scope[showArray[n]] = true;
+    }
+    for (var n = 0; n < hideArray.length; n++) {
+        $scope[hideArray[n]] = false;
+    }
     var bodyElm = document.getElementsByTagName('body')[0];
     var bodyWidth = bodyElm.clientWidth;
     var bodyHeight = bodyElm.clientHeight;
@@ -145,4 +159,18 @@ function getStringData(obj) {
         str = str + key + '=' + obj[key] + '&';
     });
     return str;
+}
+function showAppMessage($scope, message, actionSuccess) {
+    $scope.appMessageDisp = true;
+    $scope.appMessage = message;
+    $scope.appMessageErr = !actionSuccess;
+    $scope.appMessageSuccess = actionSuccess;
+}
+function hideAppMessage($scope) {
+    $scope.appMessageDisp = false;
+    $scope.appMessage = '';
+}
+function resetActivationKeys() {
+    keySet = {resetKey: false, activateUser: false, notSet: false};
+    key = false;
 }

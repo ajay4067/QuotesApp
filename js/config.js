@@ -20,3 +20,5 @@ REGISTER_VALIDATION_EMAIL = 'Invalid Email Id.';
 REGISTER_VALIDATION_PASSWORD = 'Use strong password that contains at least 6 characters, a special character, a number and a capital letter.';
 REGISTER_VALIDATION_CAPTCHA = 'Your entered captcha was wrong please re-enter.';
 REGISTER_LOGIN = 'Login to the application, if email verification is complete.';
+EMAIL_VERIFY_SENT = 'Verification email is sent to your email Id';
+EMAIL_VERIFY_SENT_FAIL = 'There was an error in sending out verification email, please try after some time';

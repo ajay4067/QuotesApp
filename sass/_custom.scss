@@ -1,5 +1,6 @@
 body{
-    background: #323a45;
+    font-family: 'Open Sans Condensed', sans-serif;
+    background: #00c18b;
     color : #FFF;
 }
 input {
@@ -7,7 +8,6 @@ input {
     border: 1px solid rgba(0, 0, 0, 0.15);
     border-radius: 0.3125em;
     color: rgba(0, 0, 0, 0.7);
-    font-size: 1em;
     margin: 0;
     outline: 0 none;
     padding: 0.65em 1em;
@@ -27,6 +27,10 @@ input:focus {
     font-size: 53px;
     padding: 20px;
     font-weight: 300;
+    color: rgba(0,0,0,0.8);
+    text-shadow: 2px 8px 6px rgba(0,0,0,0.2),
+        0px -5px 35px rgba(255,255,255,0.3);
+    margin-top: 20px;
 }
 div.quoteAuthorBigQuote {
     text-align: right;
@@ -62,12 +66,21 @@ input:-webkit-autofill:focus {
     background-image: linear-gradient(#96e570, #64df29);
     box-shadow: inset 0 0 3px #e5f9db;
     border : 1px solid #479f1d;
+    color: #fff;
 }
 form input {
     margin: 10px 0;
 }
 .signuplink, .forgotPswdLink{
     text-align: center;
+
+}
+.signuplink a {
+    color: #fff;
+}
+.signuplink a:hover {
+    cursor: pointer;
+    color: #000;
 }
 #captcha-container{
     text-align: center;
@@ -84,19 +97,18 @@ form input {
     overflow: auto;
 }
 .invalid-input {
-    /*background: #df8989 !important;*/
-    border: 1px solid #ca3838;
-    color: #7b2121 !important;
+    border: 1px solid #8E001C;
+    color: #8E001C !important;
     font-weight: bold;
 }
-.valid-input{
-    /*background: #91e26a !important;*/
-    border: 1px solid #58c026;
-    color: #316b15 !important;
+.valid-input {
+    border: 1px solid #45BF55;
+    color: #45BF55 !important;
     font-weight: bold;
 }
-.err-msg{
-    color: #df8989;
+.err-msg {
+    color: #8E001C;
+    font-weight: 600;
 }
 .success-msg{
     color: #91e26a;
@@ -155,7 +167,7 @@ span.ajax-load {
     opacity:0;
 }
 .stdBtn:focus {
-    border: 2px solid gray;
+    text-shadow: 2px 0 4px #000;
 }
 .titleBar {
     text-align: center;
@@ -163,6 +175,7 @@ span.ajax-load {
     font-size: 3em;
     font-weight: 600;
     text-transform: uppercase;
+    text-shadow: 3px 1px 0px rgba(0,0,0,0.4);
 }
 p.signuplink, p.forgotPswdLink {
     padding: 5px 0;
@@ -174,7 +187,7 @@ p.signuplink, p.forgotPswdLink {
         border-bottom: 1px solid;
     }
 }
-p.app-message {
+p.app-message-error {
     text-align: center;
     padding: 10px;
     border: 1px solid;
@@ -183,12 +196,22 @@ p.app-message {
     color: darkred;
     font-weight: 600;
 }
+p.app-message-success {
+    text-align: center;
+    padding: 10px;
+    border: 1px solid;
+    border-radius: 3px;
+    background: #58c026;
+    color: #316b15;
+    font-weight: 600;
+}
 .loginBtnRegForm {
     margin-top: 28px;
     text-align: center;
     color: #479f1d;
     font-weight: 500;
     font-size: 1.2em;
+    color: #316b15;
 }
 .reg-form-container{
     margin-top: 20px;
@@ -238,4 +261,35 @@ p.app-message {
         -webkit-transform: translateX(200%);
         transform: translateX(200%); 
     }    
+}
+.loginBtnRegForm a {
+    display: block;
+    width: 80%;
+    text-align: center;
+    margin: 0 auto;
+    margin-top: 22px;
+    text-decoration: none;
+    color: #fff;
+}
+.header{
+    padding: 0;
+}
+span.linkResend:hover {
+    color: black;
+}
+span.linkResend {
+    cursor: pointer;
+    color: green;
+    font-weight: 600;
+}
+p.resend-verify-invite {
+    padding: 10px;
+    text-align: center;
+    font-size: 1.2em;
+}
+.reset-email{
+    padding: 0 0 5px;
+    font-size: 1.2em;
+    color: black;
+    font-weight: 600;
 }

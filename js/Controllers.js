@@ -1,46 +1,24 @@
-myApp.controller('ParentController', function($scope) {
-    $scope.appMessageDisp = true;
-    if (keySet.resetKey) {
-        if (key) {
-            showHideGame($scope, ['resetSendEmailDisp'], ['loginFormDisp']);
-            $scope.appMessageDisp = true;
-            $scope.$parent.titleBarMsg = PASSWORD_RESET;
-            $scope.resetPswdObj = {'resetKey': key.split('***')[0], 'email': key.split('***')[1]};
-        } else {
-            $scope.appMessageDisp = true;
-            $scope.$parent.titleBarMsg = PASSWORD_RESET_USED;
-            showHideGame($scope, ['loginDisp'], []);
-        }
-
-    } else if (keySet.activateUser) {
-        if (key === '200') {
-            $scope.appMessageDisp = true;
-            $scope.$parent.titleBarMsg = USER_VERIFIED;
-        } else if (key === '203') {
-            $scope.appMessageDisp = true;
-            $scope.$parent.titleBarMsg = USER_ALREADY_VERIFIED;
-        } else {
-            $scope.appMessageDisp = true;
-            $scope.$parent.titleBarMsg = USER_VERIFICATION_ERR;
-        }
-    } else {
-        $scope.appMessageDisp = false;
-    }
+myApp.controller('ParentController', function($scope, $location) {
     $scope.headerTitle = "Inspirational Quotes";
+    $scope.singleQuote = '“There are only two ways to live your life. One is as though nothing is a miracle. The other is as though everything is a miracle.”';
+    $scope.singleQuoteAuthor = '― Albert Einstein';
+
+    if (!keySet.notSet) {
+        $location.url('/redirect');
+    } else {
+        resetActivationKeys();
+    }
 });
 
 myApp.controller('RegisterController', function($scope, WebServiceHandler) {
-    $scope.appMessageDisp = false;
-    $scope.singleQuote = '“There are only two ways to live your life. One is as though nothing is a miracle. The other is as though everything is a miracle.”';
-    $scope.singleQuoteAuthor = '― Albert Einstein';
+    hideAppMessage($scope);
+    showHideGame($scope, ['registerFormDisp'], ['appMessageDisp', 'register_success', 'emailIdUnique']);
+
     $scope.register_validation_name = REGISTER_VALIDATION_NAME;
     $scope.register_validation_email = REGISTER_VALIDATION_EMAIL;
     $scope.register_validation_password = REGISTER_VALIDATION_PASSWORD;
     $scope.register_validation_captcha = REGISTER_VALIDATION_CAPTCHA;
     $scope.register_login = REGISTER_LOGIN;
-    $scope.register_success = false;
-    $scope.emailIdUnique = false;
-    $scope.registerFormDisp = true;
     $scope.emailIdStatusReceived = '';
 
     if (typeof Recaptcha === 'undefined') {
@@ -61,7 +39,8 @@ myApp.controller('RegisterController', function($scope, WebServiceHandler) {
     }
 
     $scope.register = function(user) {
-        showLoading();
+        hideAppMessage($scope);
+        showLoading($scope, [], ['appMessageDisp']);
         WebServiceHandler.register({
             'name': user.name,
             'email': user.emailId,
@@ -70,17 +49,11 @@ myApp.controller('RegisterController', function($scope, WebServiceHandler) {
             'recaptcha_response_field': Recaptcha.get_response()
         }).then(function(response) {
             if (response.status === 201) {
-                $scope.appMessageDisp = true;
-                $scope.appMessage = REGISTER_SUCCESS;
-                $scope.captchaError = false;
-                $scope.registerFormDisp = false;
-                $scope.register_success = true;
+                showAppMessage($scope, REGISTER_SUCCESS, true);
+                showHideGame($scope, ['register_success'], ['captchaError', 'registerFormDisp']);
             } else {
-                $scope.appMessageDisp = true;
-                $scope.appMessage = REGISTER_FAILURE;
-                $scope.captchaError = false;
-                $scope.registerFormDisp = false;
-                $scope.register_success = true;
+                showAppMessage($scope, REGISTER_FAILURE, false);
+                showHideGame($scope, ['register_success'], ['captchaError', 'registerFormDisp']);
             }
             hideLoading();
         }, function(failureReason) {
@@ -88,10 +61,8 @@ myApp.controller('RegisterController', function($scope, WebServiceHandler) {
                 Recaptcha.reload();
                 $scope.captchaError = true;
             } else {
-                $scope.$parent.appMessageDisp = true;
-                $scope.$parent.titleBarMsg = REGISTER_FAILURE;
-                $scope.captchaError = false;
-                $scope.registerFormDisp = true;
+                showAppMessage($scope, REGISTER_FAILURE, false);
+                showHideGame($scope, ['registerFormDisp'], ['captchaError']);
                 $scope.loginForm.$setPristine(true);
                 $scope.user = resetObjectKeysToEmpty(user);
             }
@@ -100,88 +71,132 @@ myApp.controller('RegisterController', function($scope, WebServiceHandler) {
     };
 });
 
-myApp.controller('LoginController', function($scope, WebServiceHandler, $http) {
-    $scope.loginFormDisp = true;
-    $scope.resetSendEmailDisp = false;
-    $scope.headerTitle = "Inspirational Quotes";
-    $scope.singleQuote = '“There are only two ways to live your life. One is as though nothing is a miracle. The other is as though everything is a miracle.”';
-    $scope.singleQuoteAuthor = '― Albert Einstein';
+myApp.controller('LoginController', function($scope, WebServiceHandler, $http, $location) {
+
+    hideAppMessage($scope);
+    showHideGame($scope, ['loginFormDisp'], ['resetSendEmailDisp']);
+
     $scope.login = function(user) {
-        appMessageDisp = false;
-        showLoading();
+        hideAppMessage($scope);
+        var emailId = user.emailId;
+        showLoading($scope, [], ['appMessageDisp']);
         WebServiceHandler.login({
             'email': user.emailId,
             'password': pidCrypt.MD5(user.password)
         }).then(function(response) {
             if (response.status === 200) {
                 $http.defaults.headers.common['Authorization'] = response.data.api_key;
+                $location.url('/category');
                 //present Logged in page
             } else if (response.status === 202) {
-                $scope.appMessage = ACCOUNT_NOT_ACTIVE;
-                $scope.appMessageDisp = true;
+                showAppMessage($scope, ACCOUNT_NOT_ACTIVE, false);
                 $scope.loginForm.$setPristine(true);
                 $scope.user = resetObjectKeysToEmpty(user);
+                $scope.resendVerifyInviteDisp = true;
+                $scope.resetEmailId = emailId;
             }
             hideLoading();
         }, function() {
-            $scope.appMessage = LOGIN_FAIL;
-            $scope.appMessageDisp = true;
+            showAppMessage($scope, LOGIN_FAIL, false);
             $scope.loginForm.$setPristine(true);
             $scope.user = resetObjectKeysToEmpty(user);
             hideLoading();
         });
     };
+
     $scope.showForgotPswd = function() {
-        $scope.$parent.appMessageDisp = false;
-        $scope.loginFormDisp = false;
-        $scope.resetSendEmailDisp = true;
+        hideAppMessage($scope);
+        showHideGame($scope, ['resetSendEmailDisp'], ['appMessageDisp', 'loginFormDisp']);
     };
+
     $scope.resetSendEmail = function(email) {
-        $scope.$parent.appMessageDisp = false;
-        showLoading();
+        hideAppMessage($scope);
+        showLoading($scope, [], ['appMessageDisp']);
         WebServiceHandler.sendReset(email).then(function() {
-            $scope.appMessageDisp = true;
-            $scope.appMessage = RESET_EMAIL_SENT;
-            $scope.loginFormDisp = true;
-            $scope.resetSendEmailDisp = false;
+            showAppMessage($scope, RESET_EMAIL_SENT, true);
+            showHideGame($scope, ['loginFormDisp'], ['resetSendEmailDisp']);
             $scope.resetSendEmailForm.$setPristine(true);
             $scope.resetEmail = '';
             hideLoading();
         }, function() {
-            $scope.appMessageDisp = true;
-            $scope.appMessage = RESET_EMAIL_SENT;
-            $scope.loginFormDisp = true;
-            $scope.resetSendEmailDisp = false;
+            showAppMessage($scope, RESET_EMAIL_SENT, true);
+            showHideGame($scope, ['loginFormDisp'], ['resetSendEmailDisp']);
             $scope.resetSendEmailForm.$setPristine(true);
             $scope.resetEmail = '';
             hideLoading();
         });
     };
 
-    $scope.showRegisterTemplate = function() {
-        var captcha_script = document.createElement('script');
-        captcha_script.setAttribute('src', 'http://www.google.com/recaptcha/api/js/recaptcha_ajax.js');
-        document.head.appendChild(captcha_script);
-        window.location.hash = '#register';
-    };
-});
-myApp.controller('ResetController', function($scope, WebServiceHandler) {
-    $scope.resetPswd = function(resetPswdObj) {
-        showLoading();
-        var pswd = resetPswdObj.newPassword;
-        resetPswdObj.newPassword = pidCrypt.MD5(pswd);
-        WebServiceHandler.resetPswd(resetPswdObj).then(function() {
-            $scope.$parent.showLogin();
-            $scope.$parent.appMessageDisp = true;
-            $scope.$parent.titleBarMsg = PASSWORD_CHANGED;
+    $scope.resendVerifyInvite = function() {
+        hideAppMessage($scope);
+        var email = $scope.resetEmailId;
+        showLoading($scope, [], ['appMessageDisp']);
+        WebServiceHandler.resendVerifyInvite(email).then(function(response) {
+            console.log(response);
+            showAppMessage($scope, EMAIL_VERIFY_SENT, true);
+            showHideGame($scope, ['resendVerifyInviteResponseDisp'], ['resendVerifyInviteDisp']);
             hideLoading();
-        }, function() {
-            $scope.$parent.showLogin();
-            $scope.$parent.appMessageDisp = true;
-            $scope.$parent.titleBarMsg = PASSWORD_CHANGE_FAIL;
+        }, function(response) {
+            console.log(response);
+            showAppMessage($scope, EMAIL_VERIFY_SENT_FAIL, false);
+            showHideGame($scope, ['resendVerifyInviteResponseDisp'], ['resendVerifyInviteDisp']);
             hideLoading();
         });
     };
+});
+myApp.controller('ResetController', function($scope, WebServiceHandler) {
+
+    if (keySet.resetKey) {
+        if (key !== 'false') {
+            showAppMessage($scope, PASSWORD_RESET, true);
+            $scope.resetPswdObj = {'resetKey': key.split('***')[0], 'email': key.split('***')[1]};
+            showHideGame($scope, ['resetFormDisp'], ['reset_success']);
+            $scope.password_changed = PASSWORD_CHANGED;
+        } else {
+            showAppMessage($scope, PASSWORD_RESET_USED, false);
+            showHideGame($scope, ['reset_success'], ['resetFormDisp']);
+            $scope.password_changed = 'Reset link seems expired. Please request it again.';
+        }
+    } else if (keySet.activateUser) {
+        if (key === '200') {
+            showAppMessage($scope, USER_VERIFIED, true);
+        } else if (key === '203') {
+            showAppMessage($scope, USER_ALREADY_VERIFIED, true);
+        } else {
+            showAppMessage($scope, USER_VERIFICATION_ERR, false);
+        }
+        showHideGame($scope, ['reset_success'], ['resetFormDisp']);
+        $scope.password_changed = 'Please login.';
+    } else {
+        hideAppMessage($scope);
+        showHideGame($scope, ['reset_success'], ['resetFormDisp']);
+        $scope.password_changed = 'Please login.';
+    }
+
+    $scope.resetPswd = function(resetPswdObj) {
+        hideAppMessage($scope.$parent, true);
+        showLoading($scope, [], ['appMessageDisp']);
+        var pswd = resetPswdObj.newPassword;
+        resetPswdObj.newPassword = pidCrypt.MD5(pswd);
+        resetPswdObj.repeatPassword = pidCrypt.MD5(pswd);
+        WebServiceHandler.resetPswd(resetPswdObj).then(function() {
+            showHideGame($scope, ['reset_success'], ['resetFormDisp']);
+            showAppMessage($scope, PASSWORD_CHANGED, true);
+            $scope.resetForm.$setPristine(true);
+            $scope.user = resetObjectKeysToEmpty(resetPswdObj);
+            hideLoading();
+        }, function() {
+            showHideGame($scope, ['reset_success'], ['resetFormDisp']);
+            showAppMessage($scope, PASSWORD_CHANGE_FAIL, false);
+            $scope.password_changed = 'Login to the application.';
+            $scope.resetForm.$setPristine(true);
+            $scope.user = resetObjectKeysToEmpty(resetPswdObj);
+            hideLoading();
+        });
+    };
+});
+myApp.controller('CategoryController', function($scope, WebServiceHandler, Data){
+    
 });
 myApp.controller('QuoteAppController', function($scope, WebServiceHandler, Data) {
     $scope.getWritersNCtgs = function() {

@@ -10,7 +10,8 @@ myApp.controller('ParentController', function($scope, $location) {
     }
 });
 
-myApp.controller('RegisterController', function($scope, WebServiceHandler) {
+myApp.controller('RegisterController', function($scope, WebServiceHandler, $http, $location) {
+    logoutIfAuthSet($http, $location);
     hideAppMessage($scope);
     showHideGame($scope, ['registerFormDisp'], ['appMessageDisp', 'register_success', 'emailIdUnique']);
 
@@ -72,7 +73,7 @@ myApp.controller('RegisterController', function($scope, WebServiceHandler) {
 });
 
 myApp.controller('LoginController', function($scope, WebServiceHandler, $http, $location) {
-
+    logoutIfAuthSet($http, $location);
     hideAppMessage($scope);
     showHideGame($scope, ['loginFormDisp'], ['resetSendEmailDisp']);
 
@@ -144,8 +145,8 @@ myApp.controller('LoginController', function($scope, WebServiceHandler, $http, $
         });
     };
 });
-myApp.controller('ResetController', function($scope, WebServiceHandler) {
-
+myApp.controller('ResetController', function($scope, WebServiceHandler, $http, $location) {
+    logoutIfAuthSet($http, $location);
     if (keySet.resetKey) {
         if (key !== 'false') {
             showAppMessage($scope, PASSWORD_RESET, true);
@@ -195,8 +196,18 @@ myApp.controller('ResetController', function($scope, WebServiceHandler) {
         });
     };
 });
-myApp.controller('CategoryController', function($scope, WebServiceHandler, Data){
-    
+myApp.controller('LogoutController', function($scope, WebServiceHandler, Data, $http, $location) {
+    logoutIfAuthSet($http, $location);
+});
+myApp.controller('CategoryController', function($scope, WebServiceHandler, Data) {
+    $scope.categories = [
+        {'name': 'Most popular', 'description': 'Most liked quotes', 'ctgId': 1, 'likes': 3},
+        {'name': 'einstein', 'description': 'A great Scientist', 'ctgId': 1, 'likes': 5},
+        {'name': 'einstein', 'description': 'A great Scientist', 'ctgId': 1, 'likes': 7},
+        {'name': 'UG', 'description': 'Mind is myth', 'ctgId': 2, 'likes': 9},
+        {'name': 'Osho', 'description': 'The rebel', 'ctgId': 3, 'likes': 11},
+        {'name': 'Sri Sri', 'description': 'My beloved mystic', 'ctgId': 4, 'likes': 78}
+    ];
 });
 myApp.controller('QuoteAppController', function($scope, WebServiceHandler, Data) {
     $scope.getWritersNCtgs = function() {

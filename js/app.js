@@ -3,20 +3,24 @@ var myApp = angular.module('myApp', ['ngRoute', 'ngAnimate']);
 myApp.config(function($routeProvider) {
     $routeProvider
             .when('/', {
-                templateUrl: 'templates/login.php',
+                templateUrl: 'templates/login.html',
                 controller: 'LoginController'
             })
             .when('/register', {
-                templateUrl: 'templates/register.php',
+                templateUrl: 'templates/register.html',
                 controller: 'RegisterController'
             })
             .when('/redirect', {
-                templateUrl: 'templates/redirect.php',
+                templateUrl: 'templates/redirect.html',
                 controller: 'ResetController'
             })
-            .when('/category', {
-                templateUrl: 'templates/category.php',
+            .when('/categories', {
+                templateUrl: 'templates/categories.html',
                 controller: 'CategoryController'
+            })
+            .when('/logout', {
+                templateUrl: 'templates/logout.html',
+                controller: 'LogoutController'
             });
 });
 myApp.directive('checkSplChars', function() {
@@ -173,4 +177,12 @@ function hideAppMessage($scope) {
 function resetActivationKeys() {
     keySet = {resetKey: false, activateUser: false, notSet: false};
     key = false;
+}
+function logoutIfAuthSet($http, $location) {
+    if ($http.defaults.headers.common['Authorization']) {
+        $http.defaults.headers.common['Authorization'] = '';
+        $location.url('/logout');
+    } else {
+        return;
+    }
 }

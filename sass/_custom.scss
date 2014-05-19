@@ -227,7 +227,6 @@ p.app-message-success {
     font-size: 1.2em;
     padding : 10px 0;
 }
-.quote-begin{font-family: serif;}
 .load-view.ng-enter {
     -webkit-animation: fadeInDown 1s;
     -moz-animation: fadeInDown 1s;
@@ -292,4 +291,72 @@ p.resend-verify-invite {
     font-size: 1.2em;
     color: black;
     font-weight: 600;
+}
+
+@media all and (max-width : 1024px){
+    body{
+        padding: 10px;
+    }
+    .login-form{
+        margin-top: 40px;
+    }
+    .bigQuote{
+        font-size:1.3em;
+    }
+    div.quoteAuthorBigQuote{
+        font-size: 1.2em;
+    }
+    .quoteContainer{
+        display: none;
+    }
+}
+.categories-list{
+    list-style: none;
+    padding: 0;
+    li{
+        padding: 10px 0;
+        display: block;
+        overflow: auto;
+        border-bottom: 1px solid;
+    }
+}
+.ctg-name {
+    display: block;
+    padding: 2px 0;
+    font-size: 1.2em;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+}
+.ctg-desc {
+    display: block;
+    padding: 2px 0;
+    font-size: 1.2em;
+}
+.likeCtg {
+    height: 48px;
+    display: inline-block;
+    width: 48%;
+    background-image: url("../img/good.png");
+    background-repeat: no-repeat;
+    text-align: center;
+    line-height: 48px;
+}
+.reveal-ctg{
+    height: 48px;
+    display: inline-block;
+    width: 48%;
+    background-image: url("../img/next_item.png");
+    background-repeat: no-repeat;
+    line-height: 48px;
+    background-position: 100%;
+}
+.search-ctg{
+    background-image: url("../img/search.png");
+    background-repeat: no-repeat;
+    background-position: 100%;
+}
+.likes-count{
+    background: blue;
+    padding: 3px 10px;
+    border-radius: 4px;
 }

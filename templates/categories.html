@@ -1,0 +1,27 @@
+<div ng-controller="CategoryController">
+    <div class="row">App Name</div>
+    <div class="row">
+        <input type="text" placeholder="Search..." ng-model="search" class="search-ctg" maxlength="15">
+    </div>
+    <div class="row">
+        <ul class="categories-list">
+            <li ng-repeat="category in categories| filter:search"
+                ng-click="getQuotes($index)">
+                <div class="small-8 columns">
+                    <span class="ctg-name">{{category.name}}</span>
+                    <span class="ctg-desc">{{category.description}}</span>
+                </div>
+                <div class="small-4 columns">
+                    <div class="row">
+                        <span class="small-6 likeCtg" ng-click="likeCtg($index)">
+                            <span class="likes-count">{{category.likes}}</span></span>
+                        <span class="small-6 reveal-ctg" ng-click="revealQuotes($index)">
+                            &nbsp;
+                        </span>
+                    </div>
+                </div>
+
+            </li>
+        </ul>
+    </div>
+</div>

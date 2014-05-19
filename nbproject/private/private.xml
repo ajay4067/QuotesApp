@@ -3,9 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/wamp/www/QuotesApp/templates/category.php</file>
-            <file>file:/C:/wamp/www/QuotesApp/js/Controllers.js</file>
-            <file>file:/C:/wamp/www/QuotesApp/js/app.js</file>
+            <file>file:/C:/wamp/www/quotes/js/category.json</file>
+            <file>file:/C:/wamp/www/quotes/sass/_custom.scss</file>
+            <file>file:/C:/wamp/www/quotes/templates/login.html</file>
+            <file>file:/C:/wamp/www/quotes/templates/categories.html</file>
+            <file>file:/C:/wamp/www/quotes/js/app.js</file>
+            <file>file:/C:/wamp/www/quotes/js/Controllers.js</file>
         </group>
     </open-files>
 </project-private>

@@ -1,6 +1,7 @@
 var APP_ROOT = 'http://localhost/QuotesApp/';
-var SERVICE_ROOT = 'http://jaagar.org/QuotesAppService/v1/';
-var SERVICE_ROOT = 'http://localhost/QuotesAppService/v1/';
+//var APP_ROOT = 'http://jaagar.org/QuotesApp/';
+var SERVICE_ROOT = 'http://localhost/QuotesAppService/v1.1/';
+//var SERVICE_ROOT = 'http://jaagar.org/QuotesAppService/v1.1/';
 // App messages
 var ACCOUNT_NOT_ACTIVE = 'The account is still not active, please check your email to activate.';
 var LOGIN_FAIL = 'Login Failed, please try again.';

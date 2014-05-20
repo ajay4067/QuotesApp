@@ -199,15 +199,205 @@ myApp.controller('ResetController', function($scope, WebServiceHandler, $http, $
 myApp.controller('LogoutController', function($scope, WebServiceHandler, Data, $http, $location) {
     logoutIfAuthSet($http, $location);
 });
-myApp.controller('CategoryController', function($scope, WebServiceHandler, Data) {
+myApp.controller('CategoryController', function($scope, WebServiceHandler, Data, $location) {
     $scope.categories = [
-        {'name': 'Most popular', 'description': 'Most liked quotes', 'ctgId': 1, 'likes': 3},
-        {'name': 'einstein', 'description': 'A great Scientist', 'ctgId': 1, 'likes': 5},
-        {'name': 'einstein', 'description': 'A great Scientist', 'ctgId': 1, 'likes': 7},
-        {'name': 'UG', 'description': 'Mind is myth', 'ctgId': 2, 'likes': 9},
-        {'name': 'Osho', 'description': 'The rebel', 'ctgId': 3, 'likes': 11},
-        {'name': 'Sri Sri', 'description': 'My beloved mystic', 'ctgId': 4, 'likes': 78}
+        {'name': 'Most popular',
+            'description': 'Most liked quotes',
+            'ctgId': 1, 'likes': 3,
+            liked: false, 'editable': false},
+        {'name': 'All the quotes',
+            'description': 'This category opens up all the quotes available with us',
+            'ctgId': 1, 'likes': 3,
+            liked: false, 'editable': true},
+        {'name': 'einstein', 'description': 'A great Scientist', 'ctgId': 2,
+            'likes': 5, liked: true, 'editable': true},
+        {'name': 'einstein', 'description': 'A great Scientist', 'ctgId': 3, 'likes': 7,
+            liked: false, 'editable': false},
+        {'name': 'UG', 'description': 'Mind is myth', 'ctgId': 5, 'likes': 9,
+            liked: false, 'editable': true},
+        {'name': 'Osho', 'description': 'The rebel', 'ctgId': 7, 'likes': 11,
+            liked: true, 'editable': false},
+        {'name': 'Sri Sri', 'description': 'My beloved mystic', 'ctgId': 4, 'likes': 78333,
+            liked: false, 'editable': true}
     ];
+    $scope.actions = [];
+    for (var n = 0; n < $scope.categories.length; n++) {
+        $scope.actions.push({'delete': false, 'disabled': false});
+    }
+    $scope.actionAddDisabled = false;
+    $scope.editModel = {'ctgId': '', 'name': '', 'description': ''};
+    $scope.deleteIndex = -1;
+    $scope.editIndex = -1;
+    showHideGame($scope, ['ctgDisp'], ['editCtgDisp', 'createCtgDisp']);
+    $scope.likeCategory = function(index) {
+        $scope.categories[index].liked = !$scope.categories[index].liked;
+        $scope.categories[index].likes++;
+    };
+    $scope.editCategory = function(index) {
+        $scope.editModel = {
+            'ctgId': $scope.categories[index].ctgId,
+            'name': $scope.categories[index].name,
+            'description': $scope.categories[index].description};
+        $scope.editIndex = index;
+        showHideGame($scope, ['editCtgDisp'], ['ctgDisp', 'createCtgDisp']);
+    };
+    $scope.cancelCategoryEdit = function() {
+        showHideGame($scope, ['ctgDisp'], ['editCtgDisp', 'createCtgDisp']);
+        $scope.editForm.$setPristine(true);
+    };
+    $scope.updateCategory = function(editModel) {
+        $scope.categories[$scope.editIndex].name = editModel.name;
+        $scope.categories[$scope.editIndex].description = editModel.description;
+        $scope.editForm.$setPristine(true);
+        showHideGame($scope, ['ctgDisp'], ['editCtgDisp', 'createCtgDisp']);
+    };
+    $scope.deleteCategoryDialog = function(index) {
+        disableButtons($scope, index, true);
+        $scope.deleteIndex = index;
+    };
+    $scope.deleteCtg = function() {
+        $scope.categories.splice($scope.deleteIndex, 1);
+        $scope.deleteDialogDisp = false;
+        disableButtons($scope, $scope.deleteIndex, false);
+        $scope.deleteIndex = -1;
+    };
+    $scope.cancelDeleteCtg = function() {
+        $scope.deleteDialogDisp = false;
+        disableButtons($scope, $scope.deleteIndex, false);
+        $scope.deleteIndex = -1;
+    };
+    $scope.addCategoryDialog = function() {
+        showHideGame($scope, ['createCtgDisp'], ['ctgDisp', 'editCtgDisp']);
+    };
+    $scope.cancelCategoryCreate = function() {
+        $scope.createForm.$setPristine(true);
+        showHideGame($scope, ['ctgDisp'], ['editCtgDisp', 'createCtgDisp']);
+    };
+    $scope.createCategory = function(createModel) {
+        var ctg = {
+            'name': createModel.name,
+            'description': createModel.description,
+            'ctgId': 1,
+            'likes': 3,
+            liked: false
+        };
+        $scope.categories.unshift(ctg);
+        $scope.createForm.$setPristine(true);
+        showHideGame($scope, ['ctgDisp'], ['editCtgDisp', 'createCtgDisp']);
+    };
+    $scope.displayQuotes = function(index) {
+        console.log('display Quotes for id ' + index);
+        Data.categorySelected = $scope.categories[index].ctgId;
+        $location.url('/quotes');
+    };
+
+});
+myApp.controller('QuotesController', function($scope, WebServiceHandler, Data, $location) {
+    $scope.quotes = [
+        {
+            'text': 'Sample One',
+            'quoteId': 1,
+            'likes': 14,
+            'liked': false,
+            'editable': false
+        },
+        {
+            'text': 'Sample two',
+            'quoteId': 2,
+            'likes': 1433,
+            'liked': true,
+            'editable': false
+        },
+        {
+            'text': 'Sample One Dtedsad d',
+            'quoteId': 3,
+            'likes': 1423,
+            'liked': true,
+            'editable': true
+        },
+        {
+            'text': 'Sample Last',
+            'quoteId': 4,
+            'likes': 6,
+            'liked': false,
+            'editable': false
+        }
+    ];
+    if (typeof Data.categorySelected === 'undefined') {
+//        $location.url('/categories');
+        Data.categorySelected = undefined;
+    }
+    $scope.actions = [];
+    for (var n = 0; n < $scope.quotes.length; n++) {
+        $scope.actions.push({'delete': false, 'disabled': false});
+    }
+    $scope.actionAddDisabled = false;
+    $scope.editModel = {'ctgId': '', 'name': '', 'description': ''};
+    $scope.deleteIndex = -1;
+    $scope.editIndex = -1;
+    $scope.editModel = resetObjectKeysToEmpty($scope.editModel);
+    showHideGame($scope, ['quotesDisp'], ['createQuotesDisp', 'editQuotesDisp']);
+    $scope.backToCtg = function() {
+        $location.url('/categories');
+    };
+    $scope.addQuoteDialog = function() {
+        showHideGame($scope, ['createQuotesDisp'], ['quotesDisp', 'editQuotesDisp']);
+    };
+    $scope.cancelCategoryCreate = function(createModel) {
+        $scope.createModel = resetObjectKeysToEmpty(createModel);
+        $scope.createForm.$setPristine(true);
+        showHideGame($scope, ['quotesDisp'], ['createQuotesDisp', 'editQuotesDisp']);
+    };
+    $scope.createCategory = function(createModel) {
+        var quote = {
+            'text': createModel.quote,
+            'quoteId': 1,
+            'likes': 3,
+            'liked': false,
+            'editable': true
+        };
+        $scope.quotes.unshift(quote);
+        $scope.createModel = resetObjectKeysToEmpty(createModel);
+        $scope.createForm.$setPristine(true);
+        showHideGame($scope, ['quotesDisp'], ['createQuotesDisp', 'editQuotesDisp']);
+    };
+    $scope.likeQuote = function(index) {
+        $scope.quotes[index].liked = !$scope.quotes[index].liked;
+        $scope.quotes[index].likes++;
+    };
+    $scope.editQuote = function(index) {
+        console.log(index);
+        $scope.editModel = {
+            'quoteId': $scope.quotes[index].quoteId,
+            'quote': $scope.quotes[index].text,
+            'liked': false,
+            'editable': true};
+        $scope.editIndex = index;
+        showHideGame($scope, ['editQuotesDisp'], ['quotesDisp', 'createQuotesDisp']);
+    };
+    $scope.updateQuote = function(editModel) {
+        $scope.quotes[$scope.editIndex].text = editModel.quote;
+        $scope.editForm.$setPristine(true);
+        showHideGame($scope, ['quotesDisp'], ['editQuotesDisp', 'createQuotesDisp']);
+    };
+    $scope.cancelQuoteEdit = function() {
+        $scope.editForm.$setPristine(true);
+        showHideGame($scope, ['quotesDisp'], ['editQuotesDisp', 'createQuotesDisp']);
+    };
+    $scope.deleteQuoteDialog = function(index) {
+        disableButtons($scope, index, true);
+        $scope.deleteIndex = index;
+    };
+    $scope.deleteQuote = function() {
+        $scope.quotes.splice($scope.deleteIndex, 1);
+        $scope.deleteDialogDisp = false;
+        disableButtons($scope, $scope.deleteIndex, false);
+        $scope.deleteIndex = -1;
+    };
+    $scope.cancelDeleteQuote = function() {
+        disableButtons($scope, $scope.deleteIndex, false);
+        $scope.deleteIndex = -1;
+    };
 });
 myApp.controller('QuoteAppController', function($scope, WebServiceHandler, Data) {
     $scope.getWritersNCtgs = function() {

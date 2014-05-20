@@ -4,16 +4,16 @@ body{
     color : #FFF;
 }
 input {
-    background-color: #fff !important;
-    border: 1px solid rgba(0, 0, 0, 0.15);
-    border-radius: 0.3125em;
-    color: rgba(0, 0, 0, 0.7);
-    margin: 0;
-    outline: 0 none;
-    padding: 0.65em 1em;
+    /*background-color: #fff !important;*/
+    /*border: 1px solid rgba(0, 0, 0, 0.15);*/
+    /*border-radius: 0.3125em;*/
+    /*color: rgba(0, 0, 0, 0.7);*/
+    /*margin: 0;*/
+    /*outline: 0 none;*/
+    /*padding: 0.65em 1em;*/
     transition: background-color 0.3s ease-out 0s, box-shadow 0.2s ease 0s, border-color 0.2s ease 0s;
     width: 100%;
-    font-weight: bold;
+    /*font-weight: bold;*/
 }
 input:focus {
     border-bottom-left-radius: 0.3125em;
@@ -104,7 +104,7 @@ form input {
 .valid-input {
     border: 1px solid #45BF55;
     color: #45BF55 !important;
-    font-weight: bold;
+    /*font-weight: bold;*/
 }
 .err-msg {
     color: #8E001C;
@@ -332,31 +332,321 @@ p.resend-verify-invite {
     padding: 2px 0;
     font-size: 1.2em;
 }
-.likeCtg {
-    height: 48px;
-    display: inline-block;
-    width: 48%;
-    background-image: url("../img/good.png");
-    background-repeat: no-repeat;
-    text-align: center;
-    line-height: 48px;
-}
-.reveal-ctg{
-    height: 48px;
-    display: inline-block;
-    width: 48%;
-    background-image: url("../img/next_item.png");
-    background-repeat: no-repeat;
-    line-height: 48px;
-    background-position: 100%;
-}
 .search-ctg{
     background-image: url("../img/search.png");
     background-repeat: no-repeat;
     background-position: 100%;
 }
+.next-item{
+    button{
+        background-image: url("../img/next_item.png");
+        background-repeat: no-repeat;
+        background-position: 100%;
+        height: 48px;
+        display: inherit;
+        cursor: pointer;
+        width: 100%;
+        background-color: transparent;
+        border: none;
+        outline: 0;
+    }
+    button[disabled], html input[disabled] {
+        opacity: 0.6;
+        color: #fff;
+    }
+    button[disabled]:hover {
+        border: none;
+        box-shadow: none;
+        cursor: not-allowed;
+        background: transparent;
+        background-image: url("../img/next_item.png");
+        background-repeat: no-repeat;
+        background-position: 100%;
+    }
+}
 .likes-count{
-    background: blue;
-    padding: 3px 10px;
+    padding: 0 10px 0 16px;
+    font-size: 1.2em;
+    font-weight: 600;
+    background: rgba(0,0,0,0.3);
+    opacity: 0.7;
     border-radius: 4px;
+    position : relative;
+    &:before{
+        content: '';
+        background-image: url("../img/favorite.png");
+        background-repeat: no-repeat;
+        background-position: 100%;
+        display: block;
+        width: 48px;
+        height: 1.4em;
+        position: absolute;
+        left: -31px;
+        top: 0px;
+    }
+}
+.like, .liked{
+    padding: 0 15px 0 5px;
+    cursor : pointer;
+    color : #00261C;
+    font-size: 1.2em;
+    line-height: 48px;
+    font-weight: 600;
+    outline:0;
+    &:hover{
+        text-decoration: underline;
+        outline: 0;
+    }
+}
+.likeCtg {
+    button{
+        border: none;
+        background-color: transparent;
+    }
+    button[disabled], html input[disabled] {
+        opacity: 0.6;
+        color: #fff;
+    }
+    button[disabled]:hover {
+        border: none;
+        box-shadow: none;
+        cursor: not-allowed;
+        background: transparent;
+    }
+}
+.likeCtg-quotes{
+    display: inline-block;
+    float: right;
+}
+.edits{
+    text-align: right;
+    font-weight: 600;
+    .edit-option{
+        color: #00261C;
+        padding-left: 10px;
+    }
+    .delete-option{
+        color: #B9121B;
+        padding-left: 10px;
+    }
+    .save-option{
+        color: #00261C;
+        padding-left: 10px;
+    }
+    .cancel-option{
+        color: #B9121B;
+        padding-left: 10px;
+    }
+    button{
+        background: transparent;
+        border: none;
+    }
+    button:hover{
+        text-decoration: underline;
+    }
+    button[disabled], html input[disabled] {
+        opacity: 0.6;
+    }
+    button[disabled]:hover {
+        border: none;
+        box-shadow: none;
+        cursor: not-allowed;
+        background: transparent;
+    }
+    button:focus{
+        outline: 0;
+    }
+}
+.editCtgBtns{
+    button{
+        text-align: center;
+        width: 100%;
+        font-size: 1.4em;
+        background: rgba(0,0,0,0.6);
+        padding: 12px;
+        border-radius: 4px;
+        margin-top: 10px;
+    }
+}
+.add-cateogry{
+    button{
+        font-size: 1.2em;
+        padding: 10px 18px 10px 0;
+        cursor: pointer;
+        text-align: right;
+        position: relative;
+        background: transparent;
+        border: 0;
+        float: right;
+        &:after{
+            content: '';
+            background-image: url("../img/new.png");
+            background-repeat: no-repeat;
+            background-position: 100%;
+            display: block;
+            width: 48px;
+            height: 1.4em;
+            position: absolute;
+            right: -14px;
+            top: 8px;
+        }
+    }
+    button[disabled], html input[disabled] {
+        opacity: 0.6;
+        color: #fff;
+    }
+    button[disabled]:hover {
+        border: none;
+        box-shadow: none;
+        cursor: not-allowed;
+        background: transparent;
+    }
+    button:hover {
+        text-shadow: 2px 8px 6px rgba(0,0,0,0.5);
+    }
+    button:focus{
+        outline: 0;
+    }
+}
+.back-to-ctg{
+    button{
+        font-size: 1.2em;
+        padding: 10px 18px 10px 0;
+        cursor: pointer;
+        text-align: right;
+        position: relative;
+        background: transparent;
+        border: 0;
+        float: left;
+        &:before{
+            content: '';
+            background-image: url("../img/back.png");
+            background-repeat: no-repeat;
+            background-position: 100%;
+            display: block;
+            width: 48px;
+            height: 1.4em;
+            position: absolute;
+            left: -36px;
+            top: 6px;
+        }
+    }
+    button[disabled], html input[disabled] {
+        opacity: 0.6;
+        color: #fff;
+    }
+    button[disabled]:hover {
+        border: none;
+        box-shadow: none;
+        cursor: not-allowed;
+        background: transparent;
+    }
+    button:hover {
+        text-shadow: 2px 8px 6px rgba(0,0,0,0.5);
+    }
+    button:focus{
+        outline: 0;
+    }
+}
+.delete-dialog {
+    width : 100%;
+    padding: 0 10px;
+    font-size: 1.2em;
+    font-weight: 600;
+    background: rgba(0,0,0,0.8);
+    opacity: 0.7;
+    border: 1px solid;
+    border-color: transparent;
+    border-bottom-color: #fff;
+    z-index: 1000;
+    position: fixed;
+    p{
+        text-align: center;
+        padding: 10px;
+        text-transform: uppercase;
+        cursor: pointer;
+    }
+}
+.delete-confirm{
+    border-right: 1px solid #fff;
+}
+.delete-cancel{
+
+}
+.delete-row-highlight{
+    background: rgba(0,0,0,0.6);
+}
+.topcoat-text-input,
+.topcoat-text-input--large {
+    line-height: 3rem;
+    font-size: 16px;
+    letter-spacing: 1px;
+    padding: 0 1.25rem;
+    border: 1px solid #9daca9;
+    border-radius: 6px;
+    background-color: rgba(0,0,0,0.3);
+    box-shadow: inset 0 1px rgba(0,0,0,0.1);
+    color: #454545;
+    vertical-align: top;
+}
+
+.topcoat-text-input:focus,
+.topcoat-text-input--large:focus {
+    background-color: #fff;
+    color: #454545;
+    border: 1px solid #0036ff;
+    box-shadow: 0 0 0 2px #6fb5f1;
+}
+
+.topcoat-text-input:disabled::-webkit-input-placeholder {
+    color: #454545;
+}
+
+.topcoat-text-input:disabled::-moz-placeholder {
+    color: #454545;
+}
+
+.topcoat-text-input:disabled:-ms-input-placeholder {
+    color: #454545;
+}
+
+.topcoat-text-input:invalid {
+    border: 1px solid #ec514e;
+}
+.topcoat-textarea,
+.topcoat-textarea--large {
+    padding: 0 10px;
+    font-size: 1.2em;
+    font-weight: 400;
+    border-radius: 6px;
+    line-height: 1.4em;
+    border: 1px solid #9daca9;
+    background-color: rgba(0,0,0,0.3);
+    box-shadow: inset 0 1px rgba(0,0,0,0.1);
+    color: #454545;
+    letter-spacing: 1px;
+    width: 100%;
+}
+
+.topcoat-textarea:focus,
+.topcoat-textarea--large:focus {
+    background-color: #fff;
+    color: #454545;
+    border: 1px solid #0036ff;
+    box-shadow: 0 0 0 2px #6fb5f1;
+}
+
+.topcoat-textarea:disabled::-webkit-input-placeholder {
+    color: #454545;
+}
+
+.topcoat-textarea:disabled::-moz-placeholder {
+    color: #454545;
+}
+
+.topcoat-textarea:disabled:-ms-input-placeholder {
+    color: #454545;
+}
+.edit-desc{
+    margin-top: 5px;
 }

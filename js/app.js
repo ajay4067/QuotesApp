@@ -21,6 +21,10 @@ myApp.config(function($routeProvider) {
             .when('/logout', {
                 templateUrl: 'templates/logout.html',
                 controller: 'LogoutController'
+            })
+            .when('/quotes', {
+                templateUrl: 'templates/quotes.html',
+                controller: 'QuotesController'
             });
 });
 myApp.directive('checkSplChars', function() {
@@ -34,6 +38,22 @@ myApp.directive('checkSplChars', function() {
                 } else {
                     ctrl.$setValidity('checkSplChars', false);
                     return password;
+                }
+            });
+        }
+    };
+});
+myApp.directive('minChars', function() {
+    return {
+        require: 'ngModel',
+        link: function(scope, elm, attrs, ctrl) {
+            ctrl.$parsers.unshift(function(value) {
+                if (value.length >= 35) {
+                    ctrl.$setValidity('minChars', true);
+                    return value;
+                } else {
+                    ctrl.$setValidity('minChars', false);
+                    return value;
                 }
             });
         }
@@ -185,4 +205,22 @@ function logoutIfAuthSet($http, $location) {
     } else {
         return;
     }
+}
+function disableButtons($scope, index, flag) {
+    if (flag) {
+        $scope.actions[index].delete = true;
+        for (var n = 0; n < $scope.actions.length; n++) {
+            $scope.actions[n].disabled = true;
+        }
+        $scope.actionAddDisabled = true;
+        $scope.deleteDialogDisp = true;
+    } else {
+        $scope.actions[index].delete = false;
+        for (var n = 0; n < $scope.actions.length; n++) {
+            $scope.actions[n].disabled = false;
+        }
+        $scope.actionAddDisabled = false;
+        $scope.deleteDialogDisp = false;
+    }
+
 }

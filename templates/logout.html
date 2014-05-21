@@ -1,8 +1,9 @@
 <div class="row logout-control" ng-controller="LogoutController" >
     <div class="row">
         <div class="large-12 columns">
+            <span class="login-btn" ng-click="loginRedirect()">&nbsp;</span>
             <p class="titleBar">{{headerTitle}}<p>
-            <p class="app-message-success">You are successfully logged out of the application.</p>
+            <p class="app-message-success">{{LOGOUT_MESSAGE}}</p>
         </div>
     </div>
     <div class="row">

@@ -7,6 +7,7 @@
     </div>
     <div class="row">
         <div class="small-12 large-12 columns">
+            <span class="logout-btn" ng-click="logout()">&nbsp;</span>
             <p class="titleBar">{{headerTitle}}<p>
             <p ng-show="appMessageDisp" 
                ng-class="{'app-message-error' : appMessageErr, 
@@ -40,7 +41,7 @@
                             <button ng-click="likeCategory($index)" 
                                     ng-disabled="actionAddDisabled"
                                     ng-class="{'like' : category.liked, 'liked' : !category.liked}">
-                                {{category.liked ? 'Like' : 'Unlike'}}
+                                {{category.liked ? 'Unlike' : 'Like'}}
                             </button>
                             <span class="likes-count">{{category.likes}}</span>
                         </div>
@@ -60,7 +61,7 @@
         </div>
     </div>
 
-    <div class="row" ng-show="editCtgDisp">
+    <div class="row form-edit" ng-show="editCtgDisp">
         <form name="editForm" autocomplete="off" class="edit-form small-12 columns"
               novalidate>
             <input 
@@ -72,7 +73,7 @@
                 class="topcoat-text-input"/>
             <p ng-show="editForm.name.$invalid && !editForm.name.$pristine" 
                class="err-msg">
-                Category name should be atleast 5 character long.
+                {{CTG_NAME_LENGTH_ERR}}
             </p>
             <textarea 
                 ng-class="{'invalid-input' : editForm.description.$invalid && !editForm.description.$pristine,
@@ -81,7 +82,7 @@
                 class="topcoat-textarea edit-desc" rows="4" maxlength="300" min-chars></textarea>
             <p ng-show="editForm.description.$invalid && !editForm.description.$pristine" 
                class="err-msg">
-                Category description should be atleast 35 character long.
+                {{CTG_DESC_LENGTH_ERR}}
             </p>
             <div class="row edits editCtgBtns">
                 <div class="small-6 columns">
@@ -95,7 +96,7 @@
             </div>
         </form>
     </div>
-    <div class="row" ng-show="createCtgDisp">
+    <div class="row form-edit" ng-show="createCtgDisp">
         <form name="createForm" autocomplete="off" class="create-form small-12 columns"
               novalidate>
             <input 
@@ -107,7 +108,7 @@
                 class="topcoat-text-input"/>
             <p ng-show="editForm.createForm.$invalid && !createForm.name.$pristine" 
                class="err-msg">
-                Category name should be atleast 5 character long.
+                {{CTG_NAME_LENGTH_ERR}}
             </p>
             <textarea 
                 ng-class="{'invalid-input' : createForm.description.$invalid && !createForm.description.$pristine,
@@ -116,7 +117,7 @@
                 class="topcoat-textarea edit-desc" rows="4" maxlength="300" min-chars></textarea>
             <p ng-show="createForm.description.$invalid && !createForm.description.$pristine" 
                class="err-msg">
-                Category description should be atleast 35 character long.
+                {{CTG_DESC_LENGTH_ERR}}
             </p>
             <div class="row edits editCtgBtns">
                 <div class="small-6 columns">

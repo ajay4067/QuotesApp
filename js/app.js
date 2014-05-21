@@ -2,7 +2,7 @@ var myApp = angular.module('myApp', ['ngRoute', 'ngAnimate']);
 // configure our routes
 myApp.config(function($routeProvider) {
     $routeProvider
-            .when('/', {
+            .when('/login', {
                 templateUrl: 'templates/login.html',
                 controller: 'LoginController'
             })
@@ -48,7 +48,7 @@ myApp.directive('minChars', function() {
         require: 'ngModel',
         link: function(scope, elm, attrs, ctrl) {
             ctrl.$parsers.unshift(function(value) {
-                if (value.length >= 35) {
+                if (value.length >= 30) {
                     ctrl.$setValidity('minChars', true);
                     return value;
                 } else {
@@ -149,7 +149,7 @@ function hideLoading() {
 function isWeakPassword(password) {
     var desc = ['Very Weak', 'Weak', 'Better', 'Medium', 'Strong', 'Strongest'];
     var score = 0;
-    if (typeof password == 'undefined')
+    if (typeof password === 'undefined')
         return false;
     if (password.length > 5)
         score++;
@@ -206,6 +206,15 @@ function logoutIfAuthSet($http, $location) {
         return;
     }
 }
+function loginIfAuthNotSet($http, $location) {
+    var auth = $http.defaults.headers.common['Authorization'];
+    if (typeof auth === 'undefined' || auth === '') {
+        $http.defaults.headers.common['Authorization'] = '';
+        $location.url('/login');
+    } else {
+        return;
+    }
+}
 function disableButtons($scope, index, flag) {
     if (flag) {
         $scope.actions[index].delete = true;
@@ -223,4 +232,12 @@ function disableButtons($scope, index, flag) {
         $scope.deleteDialogDisp = false;
     }
 
+}
+function logout($http, $location) {
+    $http.defaults.headers.common['Authorization'] = '';
+    $location.url('/logout');
+}
+function loginRedirect($http, $location) {
+    $http.defaults.headers.common['Authorization'] = '';
+    $location.url('/login');
 }

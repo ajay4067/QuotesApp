@@ -59,158 +59,6 @@ myApp.factory('WebServiceHandler', function($q, $http) {
         });
         return deferred.promise;
     };
-    var fetchWritersNCtgs = function(api_key) {
-        var deferred = $q.defer();
-        $.ajax({
-            type: "GET",
-            url: SERVICE_ROOT + 'writerNCtg',
-            headers: {
-                'Authorization': api_key
-            }
-        }).done(function(response) {
-            deferred.resolve(response);
-        }).fail(function(response) {
-            deferred.reject(response.responseJSON);
-        }).always(function() {
-        });
-        return deferred.promise;
-    };
-    var createWrtNCtg = function(api_key, form_data) {
-        var deferred = $q.defer();
-        $.ajax({
-            type: "POST",
-            url: SERVICE_ROOT + 'writerNCtg',
-            data: form_data,
-            contentType: false,
-            processData: false,
-            headers: {
-                'Authorization': api_key
-            }
-        }).done(function(response) {
-            deferred.resolve(response);
-        }).fail(function(response) {
-            deferred.reject(response.responseJSON);
-        }).always(function() {
-        });
-        return deferred.promise;
-    };
-    var updateWrtNCtg = function(api_key, form_data, id) {
-        var deferred = $q.defer();
-        $.ajax({
-            type: "PUT",
-            url: SERVICE_ROOT + 'writerNCtg/' + id,
-            data: form_data,
-            headers: {
-                'Authorization': api_key
-            }
-        }).done(function(response) {
-            deferred.resolve(response);
-        }).fail(function(response) {
-            deferred.reject(response.responseJSON);
-        }).always(function() {
-        });
-        return deferred.promise;
-    };
-    var removeWritersNCtgs = function(api_key, idToDelete) {
-        var deferred = $q.defer();
-        $.ajax({
-            type: "DELETE",
-            url: SERVICE_ROOT + 'writerNCtg/' + idToDelete,
-            headers: {
-                'Authorization': api_key
-            }
-        }).done(function(response) {
-            deferred.resolve(response);
-        }).fail(function(response) {
-            deferred.reject(response.responseJSON);
-        }).always(function() {
-        });
-        return deferred.promise;
-    };
-    var fetchQuotes = function(api_key, writerId) {
-        var deferred = $q.defer();
-        $.ajax({
-            type: "GET",
-            url: SERVICE_ROOT + 'quotes/' + writerId,
-            headers: {
-                'Authorization': api_key
-            }
-        }).done(function(response) {
-            deferred.resolve(response);
-        }).fail(function(response) {
-            deferred.reject(response.responseJSON);
-        }).always(function() {
-        });
-        return deferred.promise;
-    };
-
-    var createNewQuote = function(api_key, form_data) {
-        var deferred = $q.defer();
-        $.ajax({
-            type: "POST",
-            url: SERVICE_ROOT + '/quotes',
-            data: form_data,
-            headers: {
-                'Authorization': api_key
-            }
-        }).done(function(response) {
-            deferred.resolve(response);
-        }).fail(function(response) {
-            deferred.reject(response.responseJSON);
-        }).always(function() {
-        });
-        return deferred.promise;
-    };
-    var updateTheQuote = function(api_key, form_data, quoteId) {
-        var deferred = $q.defer();
-        $.ajax({
-            type: "PUT",
-            url: SERVICE_ROOT + 'quotes/' + quoteId,
-            data: form_data,
-            headers: {
-                'Authorization': api_key
-            }
-        }).done(function(response) {
-            deferred.resolve(response);
-        }).fail(function(response) {
-            deferred.reject(response.responseJSON);
-        }).always(function() {
-        });
-        return deferred.promise;
-    };
-    var removeQuote = function(api_key, idToDelete) {
-        var deferred = $q.defer();
-        $.ajax({
-            type: "DELETE",
-            url: SERVICE_ROOT + 'quotes/' + idToDelete,
-            headers: {
-                'Authorization': api_key
-            }
-        }).done(function(response) {
-            deferred.resolve(response);
-        }).fail(function(response) {
-            deferred.reject(response.responseJSON);
-        }).always(function() {
-        });
-        return deferred.promise;
-    };
-
-    var fetchAllQuotesData = function(api_key, writerId) {
-        var deferred = $q.defer();
-        $.ajax({
-            type: "GET",
-            url: SERVICE_ROOT + 'allQuotesData',
-            headers: {
-                'Authorization': api_key
-            }
-        }).done(function(response) {
-            deferred.resolve(response);
-        }).fail(function(response) {
-            deferred.reject(response.responseJSON);
-        }).always(function() {
-        });
-        return deferred.promise;
-    };
 
     var resetPassword = function(resetPswdObj) {
         var deferred = $q.defer();
@@ -253,20 +101,195 @@ myApp.factory('WebServiceHandler', function($q, $http) {
         return deferred.promise;
     };
 
+    var createWrtNCtg = function(form_data) {
+        var deferred = $q.defer();
+        $http({
+            method: "POST",
+            url: SERVICE_ROOT + 'category',
+            data: getStringData(form_data),
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Accept': '*/*',
+                'X-Requested-With': 'XMLHttpRequest',
+            }
+        }).success(function(data, status, headers, config) {
+            deferred.resolve({'status': status, 'data': data});
+        }).error(function(data, status, headers, config) {
+            deferred.reject({'status': status, 'data': data});
+        });
+        return deferred.promise;
+    };
+    var fetchWritersNCtgs = function() {
+        var deferred = $q.defer();
+        $http({
+            method: "GET",
+            url: SERVICE_ROOT + 'category',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Accept': '*/*',
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        }).success(function(data, status, headers, config) {
+            deferred.resolve({'status': status, 'data': data});
+        }).error(function(data, status, headers, config) {
+            deferred.reject({'status': status, 'data': data});
+        });
+        return deferred.promise;
+    };
+
+    var updateWrtNCtg = function(form_data, id) {
+        var deferred = $q.defer();
+        $http({
+            method: "PUT",
+            url: SERVICE_ROOT + 'category/' + id,
+            data: getStringData(form_data),
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Accept': '*/*',
+                'X-Requested-With': 'XMLHttpRequest',
+            }
+        }).success(function(data, status, headers, config) {
+            deferred.resolve({'status': status, 'data': data});
+        }).error(function(data, status, headers, config) {
+            deferred.reject({'status': status, 'data': data});
+        });
+        return deferred.promise;
+    };
+
+    var removeWritersNCtgs = function(idToDelete) {
+        var deferred = $q.defer();
+        $http({
+            method: "DELETE",
+            url: SERVICE_ROOT + 'category/' + idToDelete,
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Accept': '*/*',
+                'X-Requested-With': 'XMLHttpRequest',
+            }
+        }).success(function(data, status, headers, config) {
+            deferred.resolve({'status': status, 'data': data});
+        }).error(function(data, status, headers, config) {
+            deferred.reject({'status': status, 'data': data});
+        });
+        return deferred.promise;
+    };
+    var likeCtg = function(idToLike, flag, type) {
+        var wsURL = '';
+        if (type === 'ctg') {
+            if (flag) {
+                wsURL = 'category/like/' + idToLike;
+            } else {
+                wsURL = 'category/unlike/' + idToLike;
+            }
+        } else {
+            if (flag) {
+                wsURL = 'quote/like/' + idToLike;
+            } else {
+                wsURL = 'quote/unlike/' + idToLike;
+            }
+        }
+        var deferred = $q.defer();
+        $http({
+            method: "PUT",
+            url: SERVICE_ROOT + wsURL,
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Accept': '*/*',
+                'X-Requested-With': 'XMLHttpRequest',
+            }
+        }).success(function(data, status, headers, config) {
+            deferred.resolve({'status': status, 'data': data});
+        }).error(function(data, status, headers, config) {
+            deferred.reject({'status': status, 'data': data});
+        });
+        return deferred.promise;
+    };
+    var fetchQuotes = function(writerId) {
+        var deferred = $q.defer();
+        $http({
+            method: "GET",
+            url: SERVICE_ROOT + 'quote/' + writerId,
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Accept': '*/*',
+                'X-Requested-With': 'XMLHttpRequest',
+            }
+        }).success(function(data, status, headers, config) {
+            deferred.resolve({'status': status, 'data': data});
+        }).error(function(data, status, headers, config) {
+            deferred.reject({'status': status, 'data': data});
+        });
+        return deferred.promise;
+    };
+
+    var createNewQuote = function(form_data) {
+        var deferred = $q.defer();
+        $http({
+            method: "POST",
+            url: SERVICE_ROOT + 'quote',
+            data: getStringData(form_data),
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Accept': '*/*',
+                'X-Requested-With': 'XMLHttpRequest',
+            }
+        }).success(function(data, status, headers, config) {
+            deferred.resolve({'status': status, 'data': data});
+        }).error(function(data, status, headers, config) {
+            deferred.reject({'status': status, 'data': data});
+        });
+        return deferred.promise;
+    };
+    var updateTheQuote = function(form_data, quoteId) {
+        var deferred = $q.defer();
+        $http({
+            method: "PUT",
+            url: SERVICE_ROOT + 'quote/' + quoteId,
+            data: getStringData(form_data),
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Accept': '*/*',
+                'X-Requested-With': 'XMLHttpRequest',
+            }
+        }).success(function(data, status, headers, config) {
+            deferred.resolve({'status': status, 'data': data});
+        }).error(function(data, status, headers, config) {
+            deferred.reject({'status': status, 'data': data});
+        });
+        return deferred.promise;
+    };
+    var removeQuote = function(idToDelete) {
+        var deferred = $q.defer();
+        $http({
+            method: "DELETE",
+            url: SERVICE_ROOT + 'quote/' + idToDelete,
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Accept': '*/*',
+                'X-Requested-With': 'XMLHttpRequest',
+            }
+        }).success(function(data, status, headers, config) {
+            deferred.resolve({'status': status, 'data': data});
+        }).error(function(data, status, headers, config) {
+            deferred.reject({'status': status, 'data': data});
+        });
+        return deferred.promise;
+    };
+
     return {
         register: registerUser,
         login: loginToServer,
-        getWritersNCtgs: fetchWritersNCtgs,
-        createWritersNCtgs: createWrtNCtg,
-        deleteWritersNCtgs: removeWritersNCtgs,
-        updateWriterNCtg: updateWrtNCtg,
+        sendReset: sendResetLink,
+        resetPswd: resetPassword,
+        resendVerifyInvite: resendVerificationInvite,
+        getCategories: fetchWritersNCtgs,
+        createCategory: createWrtNCtg,
+        deleteCategory: removeWritersNCtgs,
+        updateCategory: updateWrtNCtg,
+        likeQuoteOrCtg: likeCtg,
         getQuotes: fetchQuotes,
         createQuote: createNewQuote,
         updateQuote: updateTheQuote,
-        deleteQuote: removeQuote,
-        getAllQuotesData: fetchAllQuotesData,
-        sendReset: sendResetLink,
-        resetPswd: resetPassword,
-        resendVerifyInvite: resendVerificationInvite
+        deleteQuote: removeQuote
     };
 });

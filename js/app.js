@@ -2,6 +2,14 @@ var myApp = angular.module('myApp', ['ngRoute', 'ngAnimate']);
 // configure our routes
 myApp.config(function($routeProvider) {
     $routeProvider
+            .when('/', {
+                templateUrl: 'templates/home.html',
+                controller: 'HomeController'
+            })
+            .when('/readQuotes', {
+                templateUrl: 'templates/readQuotes.html',
+                controller: 'HomeQuotesController'
+            })
             .when('/login', {
                 templateUrl: 'templates/login.html',
                 controller: 'LoginController'
@@ -144,7 +152,7 @@ function showLoading($scope, showArray, hideArray) {
 }
 
 function hideLoading() {
-    angular.element(document.getElementById('progress_div')).remove();
+    angular.element(document.querySelectorAll('#progress_div')).remove();
 }
 function isWeakPassword(password) {
     var desc = ['Very Weak', 'Weak', 'Better', 'Medium', 'Strong', 'Strongest'];

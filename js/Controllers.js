@@ -217,6 +217,7 @@ myApp.controller('CategoryController', function($scope, WebServiceHandler, Data,
     loginIfAuthNotSet($http, $location);
     $scope.categories = [];
     $scope.actions = [];
+    showLoading($scope, [], ['appMessageDisp']);
     WebServiceHandler.getCategories().then(function(response) {
         var responseCtgs = response.data.message;
         $scope.categories = responseCtgs;
@@ -241,11 +242,11 @@ myApp.controller('CategoryController', function($scope, WebServiceHandler, Data,
     };
     $scope.likeCategory = function(index) {
         hideAppMessage($scope);
-        showLoading($scope, [], ['appMessageDisp']);
         var flag = false;
         if (!$scope.categories[index].liked) {
             flag = true;
         }
+        showLoading($scope, [], ['appMessageDisp']);
         WebServiceHandler.likeQuoteOrCtg($scope.categories[index].id, flag, 'ctg')
                 .then(function(response) {
                     if (response.data.message) {
@@ -274,6 +275,7 @@ myApp.controller('CategoryController', function($scope, WebServiceHandler, Data,
     };
     $scope.updateCategory = function(editModel) {
         hideAppMessage($scope);
+        showLoading($scope, [], ['appMessageDisp']);
         WebServiceHandler.updateCategory(
                 {'name': editModel.name, 'description': editModel.description},
         editModel.id).then(function(response) {
@@ -300,6 +302,7 @@ myApp.controller('CategoryController', function($scope, WebServiceHandler, Data,
     $scope.deleteCtg = function() {
         hideAppMessage($scope);
         var deleteId = $scope.categories[$scope.deleteIndex].id;
+        showLoading($scope, [], ['appMessageDisp']);
         WebServiceHandler.deleteCategory(deleteId).then(function(response) {
             var responseCtg = response.data.message;
             if (responseCtg) {
@@ -336,6 +339,7 @@ myApp.controller('CategoryController', function($scope, WebServiceHandler, Data,
             'name': createModel.name,
             'description': createModel.description
         };
+        showLoading($scope, [], ['appMessageDisp']);
         WebServiceHandler.createCategory(ctg).then(function(response) {
             var responseCtg = response.data.message;
             console.log(responseCtg);
@@ -372,6 +376,7 @@ myApp.controller('QuotesController', function($scope, WebServiceHandler, Data, $
     $scope.headerTitle = Data.categories[Data.categorySelected.index].name;
     $scope.quotes = [];
     $scope.actions = [];
+    showLoading($scope, [], ['appMessageDisp']);
     WebServiceHandler.getQuotes(ctgSelected).then(function(response) {
         $scope.quotes = response.data.message;
         Data.quotes = $scope.quotes;
@@ -432,6 +437,7 @@ myApp.controller('QuotesController', function($scope, WebServiceHandler, Data, $
             'quote': createModel.quote,
             'wrNctg_ref': ctgSelected
         };
+        showLoading($scope, [], ['appMessageDisp']);
         WebServiceHandler.createQuote(quote).then(function(response) {
             var responseQuote = response.data.message;
             console.log(responseQuote);
@@ -459,6 +465,7 @@ myApp.controller('QuotesController', function($scope, WebServiceHandler, Data, $
     };
     $scope.updateQuote = function(editModel) {
         hideAppMessage($scope);
+        showLoading($scope, [], ['appMessageDisp']);
         WebServiceHandler.updateQuote({'quote': editModel.quote},
         editModel.quoteId).then(function(response) {
             var responseQuote = response.data.message;
@@ -489,6 +496,7 @@ myApp.controller('QuotesController', function($scope, WebServiceHandler, Data, $
     $scope.deleteQuote = function() {
         hideAppMessage($scope);
         var deleteId = $scope.quotes[$scope.deleteIndex].id;
+        showLoading($scope, [], ['appMessageDisp']);
         WebServiceHandler.deleteQuote(deleteId).then(function(response) {
             var responseDel = response.data.message;
             if (responseDel) {
@@ -509,5 +517,52 @@ myApp.controller('QuotesController', function($scope, WebServiceHandler, Data, $
         hideAppMessage($scope);
         disableButtons($scope, $scope.deleteIndex, false);
         $scope.deleteIndex = -1;
+    };
+});
+myApp.controller('HomeController', function($scope, WebServiceHandler, $http, $location, Data) {
+    logoutIfAuthSet($http, $location);
+    $scope.readCategories = [];
+    showLoading($scope, [], []);
+    WebServiceHandler.getReadCategories().then(function(response) {
+        if (response.data) {
+            $scope.readCategories = response.data;
+        }
+        hideLoading();
+    }, function() {
+        hideLoading();
+    });
+    $scope.displayQuotes = function(index) {
+        Data.readCategorySelected = {'id': $scope.readCategories[index].id, 'index': index};
+        Data.readCategories = $scope.readCategories;
+        $location.url('/readQuotes');
+    };
+    $scope.loginRedirect = function() {
+        loginRedirect($http, $location);
+    };
+});
+myApp.controller('HomeQuotesController', function($scope, WebServiceHandler, $http, $location, Data) {
+    logoutIfAuthSet($http, $location);
+    $scope.readQuotes = [];
+    if (typeof Data.readCategorySelected == 'undefined') {
+        $location.url('/');
+        Data.readCategorySelected = undefined;
+        return;
+    }
+    var ctgSelected = Data.readCategorySelected.id;
+    $scope.headerTitle = Data.readCategories[Data.readCategorySelected.index].name;
+    $scope.quotes = [];
+    showLoading($scope, [], []);
+    WebServiceHandler.getReadQuotes(ctgSelected).then(function(response) {
+        $scope.readQuotes = response.data;
+        Data.quotes = $scope.readQuotes;
+        hideLoading();
+    }, function() {
+        hideLoading();
+    });
+    $scope.loginRedirect = function() {
+        loginRedirect($http, $location);
+    };
+    $scope.backToReadCtgs = function() {
+        $location.url('/');
     };
 });

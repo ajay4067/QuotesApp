@@ -681,8 +681,26 @@ p.resend-verify-invite {
     position: absolute;
     right: 0;
     top: 16px;
-    cursor: pointer    
+    cursor: pointer;  
 }
 .reg-form-container input{
     line-height: 2.3rem;
+}
+.read-list{
+    text-align: center;
+}
+.back-btn{
+    background-image: url("../img/back_black.png");
+    background-repeat: no-repeat;
+    background-position: 100%;
+    height: 48px;
+    width: 48px;
+    display: inline-block;
+    position: absolute;
+    left: -13px;
+    top: 16px;
+    cursor: pointer;
+}
+.recaptchatable #recaptcha_response_field {
+    line-height: 1.4em;
 }

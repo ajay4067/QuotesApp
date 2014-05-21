@@ -1,4 +1,4 @@
-<div ng-controller="QuotesController">
+<div>
     <div class="delete-dialog" ng-show="deleteDialogDisp" >
         <div class="small-6 columns delete-confirm" ng-click="deleteQuote()"><p>Delete</p>
         </div>
@@ -8,7 +8,7 @@
     <div class="row">
         <div class="small-12 large-12 columns">
             <span class="logout-btn" ng-click="logout()">&nbsp;</span>
-            <p class="titleBar">{{headerTitle}}<p>
+            <p class="titleBar">{{headerTitle}}</p>
             <p ng-show="appMessageDisp" 
                ng-class="{'app-message-error' : appMessageErr, 
                           'app-message-success' : appMessageSuccess}">{{appMessage}}</p>

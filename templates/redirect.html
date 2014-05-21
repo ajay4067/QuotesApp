@@ -1,8 +1,8 @@
-<div class="row reset-control" ng-controller="ResetController" >
+<div class="row reset-control">
     <div class="row">
         <div class="large-12 columns">
             <span class="login-btn" ng-click="loginRedirect()">&nbsp;</span>
-            <p class="titleBar">{{headerTitle}}<p>
+            <p class="titleBar">{{headerTitle}}</p>
             <p ng-show="appMessageDisp" 
                ng-class="{'app-message-error' : appMessageErr, 
                           'app-message-success' : appMessageSuccess}">{{appMessage}}</p>
@@ -45,7 +45,7 @@
             </form>
             <p ng-show="reset_success" class="loginBtnRegForm">
                 {{password_changed}}
-                <a class="stdBtn" href="#">Login</a>
+                <a class="stdBtn" href="#login">Login</a>
             </p>
         </div>
     </div>

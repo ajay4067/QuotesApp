@@ -110,7 +110,7 @@ myApp.factory('WebServiceHandler', function($q, $http) {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
                 'Accept': '*/*',
-                'X-Requested-With': 'XMLHttpRequest',
+                'X-Requested-With': 'XMLHttpRequest'
             }
         }).success(function(data, status, headers, config) {
             deferred.resolve({'status': status, 'data': data});
@@ -146,7 +146,7 @@ myApp.factory('WebServiceHandler', function($q, $http) {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
                 'Accept': '*/*',
-                'X-Requested-With': 'XMLHttpRequest',
+                'X-Requested-With': 'XMLHttpRequest'
             }
         }).success(function(data, status, headers, config) {
             deferred.resolve({'status': status, 'data': data});
@@ -164,7 +164,7 @@ myApp.factory('WebServiceHandler', function($q, $http) {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
                 'Accept': '*/*',
-                'X-Requested-With': 'XMLHttpRequest',
+                'X-Requested-With': 'XMLHttpRequest'
             }
         }).success(function(data, status, headers, config) {
             deferred.resolve({'status': status, 'data': data});
@@ -195,7 +195,7 @@ myApp.factory('WebServiceHandler', function($q, $http) {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
                 'Accept': '*/*',
-                'X-Requested-With': 'XMLHttpRequest',
+                'X-Requested-With': 'XMLHttpRequest'
             }
         }).success(function(data, status, headers, config) {
             deferred.resolve({'status': status, 'data': data});
@@ -212,7 +212,7 @@ myApp.factory('WebServiceHandler', function($q, $http) {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
                 'Accept': '*/*',
-                'X-Requested-With': 'XMLHttpRequest',
+                'X-Requested-With': 'XMLHttpRequest'
             }
         }).success(function(data, status, headers, config) {
             deferred.resolve({'status': status, 'data': data});
@@ -231,7 +231,7 @@ myApp.factory('WebServiceHandler', function($q, $http) {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
                 'Accept': '*/*',
-                'X-Requested-With': 'XMLHttpRequest',
+                'X-Requested-With': 'XMLHttpRequest'
             }
         }).success(function(data, status, headers, config) {
             deferred.resolve({'status': status, 'data': data});
@@ -249,7 +249,7 @@ myApp.factory('WebServiceHandler', function($q, $http) {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
                 'Accept': '*/*',
-                'X-Requested-With': 'XMLHttpRequest',
+                'X-Requested-With': 'XMLHttpRequest'
             }
         }).success(function(data, status, headers, config) {
             deferred.resolve({'status': status, 'data': data});
@@ -266,7 +266,43 @@ myApp.factory('WebServiceHandler', function($q, $http) {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
                 'Accept': '*/*',
-                'X-Requested-With': 'XMLHttpRequest',
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        }).success(function(data, status, headers, config) {
+            deferred.resolve({'status': status, 'data': data});
+        }).error(function(data, status, headers, config) {
+            deferred.reject({'status': status, 'data': data});
+        });
+        return deferred.promise;
+    };
+
+    var getReadCtgs = function(writerId) {
+        var deferred = $q.defer();
+        $http({
+            method: "GET",
+            url: SERVICE_ROOT + 'readCategory',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Accept': '*/*',
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        }).success(function(data, status, headers, config) {
+            deferred.resolve({'status': status, 'data': data});
+        }).error(function(data, status, headers, config) {
+            deferred.reject({'status': status, 'data': data});
+        });
+        return deferred.promise;
+    };
+
+    var fetchReadQuotes = function(writerId) {
+        var deferred = $q.defer();
+        $http({
+            method: "GET",
+            url: SERVICE_ROOT + 'readQuote/' + writerId,
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Accept': '*/*',
+                'X-Requested-With': 'XMLHttpRequest'
             }
         }).success(function(data, status, headers, config) {
             deferred.resolve({'status': status, 'data': data});
@@ -290,6 +326,8 @@ myApp.factory('WebServiceHandler', function($q, $http) {
         getQuotes: fetchQuotes,
         createQuote: createNewQuote,
         updateQuote: updateTheQuote,
-        deleteQuote: removeQuote
+        deleteQuote: removeQuote,
+        getReadCategories: getReadCtgs,
+        getReadQuotes: fetchReadQuotes
     };
 });

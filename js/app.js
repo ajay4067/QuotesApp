@@ -131,7 +131,7 @@ function showLoading($scope, showArray, hideArray) {
     }
     var bodyElm = document.getElementsByTagName('body')[0];
     var bodyWidth = bodyElm.clientWidth;
-    var bodyHeight = bodyElm.clientHeight;
+    var bodyHeight = getDocHeight();
     var progressDiv = document.createElement('div');
     progressDiv.id = 'progress_div';
     progressDiv.className = 'ws-in-progress';
@@ -149,6 +149,14 @@ function showLoading($scope, showArray, hideArray) {
         'left': (bodyWidth / 2) - ajaxLoader.clientWidth / 2 + 'px'
     };
     angular.element(ajaxLoader).css(loaderStyle);
+}
+function getDocHeight() {
+    var D = document;
+    return Math.max(
+//        D.body.scrollHeight, D.documentElement.scrollHeight,
+            D.body.offsetHeight, D.documentElement.offsetHeight,
+            D.body.clientHeight, D.documentElement.clientHeight
+            );
 }
 
 function hideLoading() {
@@ -248,4 +256,8 @@ function logout($http, $location) {
 function loginRedirect($http, $location) {
     $http.defaults.headers.common['Authorization'] = '';
     $location.url('/login');
+}
+function HtmlEncode(str)
+{
+    return str.replace(/&/g, "and").replace(/>/g, "").replace(/</g, "");
 }

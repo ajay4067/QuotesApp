@@ -1,11 +1,9 @@
-var APP_ROOT = 'http://localhost/quotes/';
-//var APP_ROOT = 'http://jaagar.org/QuotesApp/';
-var SERVICE_ROOT = 'http://localhost/QuotesAppService/v1.2/';
-//var SERVICE_ROOT = 'http://jaagar.org/QuotesAppService/v1.1/';
-api_key = 'af95ba88bafd2bb0eb6f62f111b50981';
+//var APP_ROOT = 'http://localhost/quotes/';
+var APP_ROOT = 'http://jaagar.org/quotes/';
+var SERVICE_ROOT = 'v1.2/';
 
 var configs = {};
-configs['REGISTER_VALIDATION_NAME'] = 'Hello World';
+configs['REGISTER_VALIDATION_NAME'] = 'Name should be atleast 5 characters long.';
 // App messages
 configs['ACCOUNT_NOT_ACTIVE'] = 'The account is still not active, please check your email to activate.';
 configs['LOGIN_FAIL'] = 'Login Failed, please try again.';

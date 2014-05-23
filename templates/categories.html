@@ -1,14 +1,16 @@
 <div>
     <div class="delete-dialog" ng-show="deleteDialogDisp" >
-        <div class="small-6 columns delete-confirm" ng-click="deleteCtg()"><p>Delete</p>
+        <div class="small-6 columns delete-confirm" ng-click="deleteCtg()">Delete
         </div>
-        <div class="small-6 columns delete-cancel" ng-click="cancelDeleteCtg()"><p>Cancel</p>
+        <div class="small-6 columns delete-cancel" ng-click="cancelDeleteCtg()">Cancel
         </div>
     </div>
     <div class="row">
         <div class="small-12 large-12 columns">
             <span class="logout-btn" ng-click="logout()">&nbsp;</span>
             <p class="titleBar">{{headerTitle}}</p>
+        </div>
+        <div class="small-12 columns">
             <p ng-show="appMessageDisp" 
                ng-class="{'app-message-error' : appMessageErr, 
                           'app-message-success' : appMessageSuccess}">{{appMessage}}</p>
@@ -16,45 +18,42 @@
     </div>
     <div class="row" ng-show="ctgDisp">
         <div class="row">
-            <div class="small-8 columns">
+            <div class="small-3 columns">
             </div>
-            <div class="small-4 columns add-cateogry">
+            <div class="small-9 columns add-cateogry">
                 <button ng-disabled="actionAddDisabled" ng-click="addCategoryDialog()">Add a new category</button>
             </div>
         </div>
         <div class="row">
-            <input type="text" placeholder="Search..." ng-model="search" class="search-ctg topcoat-text-input" 
-                   maxlength="15">
+            <div class="small-12 large-12 columns">
+                <input type="text" placeholder="Search..." ng-model="search" class="search-ctg topcoat-text-input" 
+                       maxlength="15">
+            </div>            
         </div>
         <div class="row">
             <ul class="categories-list">
                 <li ng-repeat="category in categories| filter:search"
                     ng-class="{'delete-row-highlight': deleteIndex === $index}">
-                    <div class="small-6 large-6 columns">
-                        <span>
+                    <div class="small-12 large-12 columns" ng-click="displayQuotes($index)">
+                        <div class="ctg-text-container">
                             <span class="ctg-name">{{category.name}}</span>
                             <span class="ctg-desc">{{category.description}}</span>
-                        </span>
-                    </div>
-                    <div class="small-4 large-4 columns">
-                        <div class="likeCtg">
-                            <button ng-click="likeCategory($index)" 
-                                    ng-disabled="actionAddDisabled"
-                                    ng-class="{'like' : category.liked, 'liked' : !category.liked}">
-                                {{category.liked ? 'Unlike' : 'Like'}}
-                            </button>
-                            <span class="likes-count">{{category.likes}}</span>
                         </div>
+                        <span class="next-show"></span>
                     </div>
-                    <div class="small-2 large-2 columns next-item">
-                        <button ng-disabled="actions[$index].disabled"
-                                ng-click="displayQuotes($index)"></button>
-                    </div>
-                    <div class="small-12 columns edits" ng-show="category.editable">
-                        <button ng-disabled="actions[$index].disabled" class="edit-option" 
-                                ng-click="editCategory($index)">Edit</button>
-                        <button ng-disabled="actions[$index].disabled" class="delete-option" 
-                                ng-click="deleteCategoryDialog($index)">Delete</button>
+                    <div class="small-12 columns edits">
+                        <span ng-click="likeCategory($index)" 
+                              ng-disabled="actionAddDisabled"
+                              ng-class="{'like' : category.liked, 'liked' : !category.liked}">
+                            {{category.liked ? 'Unlike' : 'Like'}}
+                        </span>
+                        <span class="likes-count">{{category.likes}}</span>
+                        <span ng-show="category.editable">
+                            <span ng-disabled="actions[$index].disabled" class="edit-option" 
+                                  ng-click="editCategory($index)">Edit</span>
+                            <span ng-disabled="actions[$index].disabled" class="delete-option" 
+                                  ng-click="deleteCategoryDialog($index)">Delete</span>
+                        </span>
                     </div>
                 </li>
             </ul>
@@ -86,11 +85,11 @@
             </p>
             <div class="row edits editCtgBtns">
                 <div class="small-6 columns">
-                    <button ng-disabled="!editForm.$valid || editForm.$pristine" class="save-option" 
+                    <button ng-disabled="!editForm.$valid || editForm.$pristine" class="stdBtn save-option" 
                             ng-click="updateCategory(editModel)">Update</button>
                 </div>
                 <div class="small-6 columns">
-                    <button ng-disabled="actions[$index].disabled" class="cancel-option" 
+                    <button ng-disabled="actions[$index].disabled" class="stdBtn cancel-option" 
                             ng-click="cancelCategoryEdit()">Cancel</button>
                 </div>
             </div>
@@ -121,11 +120,11 @@
             </p>
             <div class="row edits editCtgBtns">
                 <div class="small-6 columns">
-                    <button ng-disabled="!createForm.$valid || createForm.$pristine" class="save-option" 
+                    <button ng-disabled="!createForm.$valid || createForm.$pristine" class="stdBtn save-option" 
                             ng-click="createCategory(createModel)">Create</button>
                 </div>
                 <div class="small-6 columns">
-                    <button class="cancel-option" 
+                    <button class="stdBtn cancel-option" 
                             ng-click="cancelCategoryCreate()">Cancel</button>
                 </div>
             </div>

@@ -217,7 +217,7 @@ myApp.controller('CategoryController', function($scope, WebServiceHandler, Data,
     loginIfAuthNotSet($http, $location);
     $scope.categories = [];
     $scope.actions = [];
-    showLoading($scope, [], ['appMessageDisp']);
+//    showLoading($scope, [], ['appMessageDisp']);
     WebServiceHandler.getCategories().then(function(response) {
         var responseCtgs = response.data.message;
         $scope.categories = responseCtgs;
@@ -277,7 +277,7 @@ myApp.controller('CategoryController', function($scope, WebServiceHandler, Data,
         hideAppMessage($scope);
         showLoading($scope, [], ['appMessageDisp']);
         WebServiceHandler.updateCategory(
-                {'name': editModel.name, 'description': editModel.description},
+                {'name': HtmlEncode(editModel.name), 'description': HtmlEncode(editModel.description)},
         editModel.id).then(function(response) {
             var responseCtg = response.data.message;
             if (responseCtg) {
@@ -336,8 +336,8 @@ myApp.controller('CategoryController', function($scope, WebServiceHandler, Data,
     $scope.createCategory = function(createModel) {
         hideAppMessage($scope);
         var ctg = {
-            'name': createModel.name,
-            'description': createModel.description
+            'name': HtmlEncode(createModel.name),
+            'description': HtmlEncode(createModel.description)
         };
         showLoading($scope, [], ['appMessageDisp']);
         WebServiceHandler.createCategory(ctg).then(function(response) {
@@ -434,7 +434,7 @@ myApp.controller('QuotesController', function($scope, WebServiceHandler, Data, $
     $scope.createQuote = function(createModel) {
         hideAppMessage($scope);
         var quote = {
-            'quote': createModel.quote,
+            'quote': HtmlEncode(createModel.quote),
             'wrNctg_ref': ctgSelected
         };
         showLoading($scope, [], ['appMessageDisp']);
@@ -466,7 +466,7 @@ myApp.controller('QuotesController', function($scope, WebServiceHandler, Data, $
     $scope.updateQuote = function(editModel) {
         hideAppMessage($scope);
         showLoading($scope, [], ['appMessageDisp']);
-        WebServiceHandler.updateQuote({'quote': editModel.quote},
+        WebServiceHandler.updateQuote({'quote': HtmlEncode(editModel.quote)},
         editModel.quoteId).then(function(response) {
             var responseQuote = response.data.message;
             if (responseQuote) {

@@ -1,0 +1,3 @@
+change baseUrl in Utils.php
+change mailHandler in Utils.php
+change db details in Config.php
